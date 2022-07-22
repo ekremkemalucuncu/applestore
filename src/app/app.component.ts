@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/compat/database'
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -9,5 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent{
 
- 
+  items: Observable<any>;
+  
+  constructor(db:AngularFireDatabase){
+    this.items=db.list('iphone').valueChanges();
+  }
+
 }

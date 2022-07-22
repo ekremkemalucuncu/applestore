@@ -11,6 +11,7 @@ export const environment = {
     apiKey: 'AIzaSyA75uw_3dmT9voubj0CjBTgdUHNTCgAkHc',
     authDomain: 'iphonestore-59bb5.firebaseapp.com',
     messagingSenderId: '278473095517',
+    databaseURL: "https://iphonestore-59bb5-default-rtdb.firebaseio.com",
   }
 };
 

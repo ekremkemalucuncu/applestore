@@ -19,6 +19,7 @@ export class AuthenticationComponent implements OnInit {
   signUpForm:FormGroup;
   isLoading$: Observable<boolean>;
   isAuth$: Observable<boolean>;
+  Message:Promise<any>
 
   constructor(
     private authService:AuthenticationService,
@@ -47,7 +48,7 @@ export class AuthenticationComponent implements OnInit {
   }
 
   onLogin(){
-   this.authService.signUser(this.signInForm) 
+   this.authService.signUser(this.signInForm)
   }
 
   onRegister(){
