@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "iphonestore-59bb5": {
+      "hosting": {
+        "iphonestore": [
+          "iphonestore-59bb5"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "iphonestore-59bb5"
+  }
+}

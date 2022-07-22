@@ -1,0 +1,13 @@
+<mat-toolbar>
+    <button mat-icon-button fxLayout fxHide.gt-xs>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span [routerLink]="['/']"><img class="logo" src="https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-index-content-uploads-10.png" alt="iPhoneLogo"></span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button >
+        <mat-icon>shopping_cart</mat-icon>
+    </button>
+    <button mat-icon-button [routerLink]="['/authentication']">
+        <mat-icon>login</mat-icon>
+    </button>
+</mat-toolbar>

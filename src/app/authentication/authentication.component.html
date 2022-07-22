@@ -1,0 +1,66 @@
+<section>
+
+    <div fxLayoutAlign="center center">   
+        
+        <mat-card class="example-card" >
+              
+                <mat-tab-group mat-align-tabs="center">
+        
+                    <mat-tab label="Sign In"> 
+                    
+                        <mat-card-content>
+                            
+                            <form fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px" [formGroup]="signInForm" (ngSubmit)="onLogin()">
+
+                                <div class="example-container">
+                                    <mat-form-field >
+                                        <mat-label>Enter your email</mat-label>
+                                        <input formControlName="email" matInput placeholder="pat@example.com" required type="email">
+                                    </mat-form-field>
+                                </div>
+                                <div class="example-container">
+                                    <mat-form-field>
+                                        <mat-label>Enter your password</mat-label>
+                                        <input formControlName="password" matInput placeholder="pat@example.com" required type="password">
+                                    </mat-form-field>
+                                </div>
+                                <button mat-button>Login</button>
+                                
+                            </form>
+                        </mat-card-content>
+                            
+                    </mat-tab>
+                 
+                 
+                    <mat-tab label="Sign Up"> 
+                        
+                        <mat-card-content>
+                            
+                            <form fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px" [formGroup]="signUpForm" (ngSubmit)="onRegister()">
+
+                                <div class="example-container">
+                                    <mat-form-field >
+                                        <mat-label>Enter your email</mat-label>
+                                        <input formControlName="email" matInput placeholder="pat@example.com" required type="email">
+                                    </mat-form-field>
+                                </div>
+                                <div class="example-container">
+                                    <mat-form-field>
+                                        <mat-label >Enter your password</mat-label>
+                                        <input formControlName="password" matInput placeholder="pat@example.com" required type="password">
+                                    </mat-form-field>
+                                </div>
+                                
+                                <button mat-button>Register</button>
+                            </form>
+                        </mat-card-content>
+
+                    </mat-tab>
+
+
+                </mat-tab-group>
+          </mat-card>
+    </div>
+    
+
+</section>
