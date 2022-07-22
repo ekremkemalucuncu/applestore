@@ -1,13 +1,21 @@
 <mat-toolbar>
-    <button mat-icon-button fxLayout fxHide.gt-xs>
+    <button  mat-icon-button fxLayout fxHide.gt-xs>
       <mat-icon>menu</mat-icon>
     </button>
-    <span [routerLink]="['/']"><img class="logo" src="https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-index-content-uploads-10.png" alt="iPhoneLogo"></span>
+    <span style="cursor: pointer;" [routerLink]="['/']"><img class="logo" src="https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-index-content-uploads-10.png" alt="iPhoneLogo"></span>
+    <span class="example-spacer"></span>
+    <span> <button mat-button>iPhone</button></span>
+    <span> <button mat-button>Accessoir</button></span>
+    <span> <button *ngIf="(isAuth$ | async)" mat-button>iPhoneManager</button></span>
+    <span> <button *ngIf="(isAuth$ | async)" mat-button>AccessoirManager</button></span>
     <span class="example-spacer"></span>
     <button mat-icon-button >
         <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button mat-icon-button [routerLink]="['/authentication']">
+    <button *ngIf="!(isAuth$ | async)" mat-icon-button [routerLink]="['/authentication']">
         <mat-icon>login</mat-icon>
+    </button>
+    <button *ngIf="(isAuth$ | async)" mat-icon-button [routerLink]="['/authentication',{status:true}]">
+        <mat-icon>logout</mat-icon>
     </button>
 </mat-toolbar>

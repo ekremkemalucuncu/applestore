@@ -8,9 +8,9 @@
         
                     <mat-tab label="Sign In"> 
                     
-                        <mat-card-content>
+                        <mat-card-content fxLayoutAlign="center center">
                             
-                            <form fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px" [formGroup]="signInForm" (ngSubmit)="onLogin()">
+                            <form *ngIf="!(isLoading$ | async)" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px" [formGroup]="signInForm" (ngSubmit)="onLogin()">
 
                                 <div class="example-container">
                                     <mat-form-field >
@@ -27,6 +27,8 @@
                                 <button mat-button>Login</button>
                                 
                             </form>
+
+                            <mat-spinner fxLayout="row" fxLayoutAlign="space-between center" *ngIf="(isLoading$ | async)"></mat-spinner>
                         </mat-card-content>
                             
                     </mat-tab>
@@ -64,3 +66,5 @@
     
 
 </section>
+
+

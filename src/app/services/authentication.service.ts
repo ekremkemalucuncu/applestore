@@ -2,6 +2,11 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { Subject } from "rxjs";
+import * as fromRoot from '../app.reducer'
+import * as AUTH from '../reducers/auth.actions'
+import * as LOADING from '../reducers/loading.actions'
 
 
 @Injectable({
@@ -9,42 +14,64 @@ import { Router } from "@angular/router";
 })
 export class AuthenticationService{
 
-    
+
     constructor(
         private auth:AngularFireAuth,
-        private router:Router
+        private router:Router,
+        private store: Store<fromRoot.State>
     ){}
 
+
     registerUser(form:FormGroup){
-       return this.auth.createUserWithEmailAndPassword(
+      this.store.dispatch(new AUTH.Authenticated());
+      this.store.dispatch(new LOADING.Loading())
+      this.auth.createUserWithEmailAndPassword(
             form.value.email,
             form.value.password
           )
-          .then(function() {
-            this.router.navigate([''])
-          }).catch(function(error) {
-            //
-        })
+          .then(
+            () => {
+            this.store.dispatch(new LOADING.NotLoading());
+          })
+          .catch(function(error) {
+            this.store.dispatch(new LOADING.NotLoading());
+          })
+          .finally(() =>{
+            this.store.dispatch(new LOADING.NotLoading());
+            this.router.navigate(['']);
+          })
+
     }
 
     signUser(form:FormGroup){
-        this.auth.signInWithEmailAndPassword(
+      this.store.dispatch(new AUTH.Authenticated());
+      this.store.dispatch(new LOADING.Loading());
+      this.auth.signInWithEmailAndPassword(
             form.value.email,
             form.value.password
-        )
-        .then(function(result) {
-            this.router.navigate['']
-          }).catch(function(error) {
-            console.log(error)
-          })
+            )
+            .then(
+              () => {
+              this.store.dispatch(new LOADING.NotLoading());
+            })
+            .catch(function(error) {
+              this.store.dispatch(new LOADING.NotLoading());
+            })
+            .finally(() => {
+              this.router.navigate(['']);
+              this.store.dispatch(new LOADING.NotLoading());
+            })
     }
 
    
 
     logout(){
-      this.auth.signOut().then(
+      this.store.dispatch(new LOADING.Loading());
+      this.auth.signOut()
+      .then(
         () => {
-          this.router.navigate(['/authentication'])
+          this.store.dispatch(new AUTH.NotAuthenticated());
+          this.store.dispatch(new LOADING.NotLoading());
         }
       )
     }

@@ -24,6 +24,7 @@ import { providePerformance,getPerformance } from '@angular/fire/performance';
 import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ReactiveFormsModule } from '@angular/forms';
+import { reducers } from './app.reducer';
 
 
 @NgModule({
@@ -50,10 +51,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     providePerformance(() => getPerformance()),
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage()),
-    ReactiveFormsModule
-    // StoreModule.forRoot({
-    //   auth:appReducer
-    // })
+    ReactiveFormsModule,
+    StoreModule.forRoot(reducers)
   ],
   providers: [
     ScreenTrackingService,UserTrackingService

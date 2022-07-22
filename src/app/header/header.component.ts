@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as fromRoot from '../app.reducer';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  isAuth$: Observable<boolean>;
 
-  ngOnInit(): void {
+  constructor(
+    private store:Store<fromRoot.State>
+  ){}
+
+  
+  ngOnInit():void{
+    this.isAuth$ = this.store.select(fromRoot.getIsAuthenticated);
   }
-
 }
