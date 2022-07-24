@@ -3,10 +3,13 @@ import { MatButtonModule } from "@angular/material/button"
 import { MatToolbarModule } from "@angular/material/toolbar"
 import { MatIconModule } from "@angular/material/icon"
 import { MatTabsModule } from "@angular/material/tabs"
-import {MatCardModule} from "@angular/material/card"
-import {MatFormFieldModule} from "@angular/material/form-field"
-import {MatInputModule} from "@angular/material/input"
+import { MatCardModule } from "@angular/material/card"
+import { MatFormFieldModule } from "@angular/material/form-field"
+import { MatInputModule } from "@angular/material/input"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
+import { MatGridListModule } from "@angular/material/grid-list"
+import { MatDividerModule } from "@angular/material/divider"
+import { MatTooltipModule } from "@angular/material/tooltip"
 
 @NgModule({
     imports:[
@@ -17,7 +20,10 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
         MatCardModule,
         MatFormFieldModule,
         MatInputModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatGridListModule,
+        MatDividerModule,
+        MatTooltipModule
     ],
     exports:[
         MatButtonModule,
@@ -27,7 +33,10 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
         MatCardModule,
         MatFormFieldModule,
         MatInputModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatGridListModule,
+        MatDividerModule,
+        MatTooltipModule
     ]
 })
 export class MaterialModule {}

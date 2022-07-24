@@ -9,6 +9,7 @@ export class ProductsComponent implements OnInit {
 
   constructor() { }
 
+  ekrem=true;
   ngOnInit(): void {
   }
 

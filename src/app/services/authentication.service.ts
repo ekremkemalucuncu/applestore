@@ -33,7 +33,9 @@ export class AuthenticationService{
             this.store.dispatch(new LOADING.NotLoading());
             this.store.dispatch(new AUTH.Authenticated());
           })
-          .catch(function(error) {
+          .catch(
+            () => {
+            this.store.dispatch(new AUTH.FailedAuthentication())
             this.store.dispatch(new LOADING.NotLoading());
           })
           .finally(() =>{
@@ -51,16 +53,17 @@ export class AuthenticationService{
         .then(
           () => {
             this.router.navigate(['']);
-            this.store.dispatch(new LOADING.NotLoading());
             this.store.dispatch(new AUTH.Authenticated());
           })
-          .catch(function(error) {
-            this.store.dispatch(new LOADING.NotLoading());
+          .catch(
+            () => {
+            this.store.dispatch(new AUTH.FailedAuthentication())
           })
-          .finally(()=> {
+          .finally(
+            ()=> {
             this.store.dispatch(new LOADING.NotLoading()); 
-            })
-    }
+          })
+          }
 
    
 

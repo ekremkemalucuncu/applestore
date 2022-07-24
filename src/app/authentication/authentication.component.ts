@@ -18,9 +18,13 @@ export class AuthenticationComponent implements OnInit {
   signInForm:FormGroup;
   signUpForm:FormGroup;
   isLoading$: Observable<boolean>;
-  isAuth$: Observable<boolean>;
+  isAuth$:Observable<boolean>;
+  errorMessage$: Observable<boolean>;
   Message:Promise<any>
+  hidesignin = true;
+  hidesignup=true;
 
+  
   constructor(
     private authService:AuthenticationService,
     private route:ActivatedRoute,
@@ -38,13 +42,13 @@ export class AuthenticationComponent implements OnInit {
       password:new FormControl(null,[Validators.required])
     })
 
-    const status = this.route.snapshot.paramMap.get('status')
-    if (status){
-      this.onLogout();
+    this.isLoading$=this.store.select(fromRoot.getIsLoading);
+    this.isAuth$=this.store.select(fromRoot.getIsAuthenticated);
+    this.errorMessage$=this.store.select(fromRoot.getIsAuthenticated);
+
+    if (this.isAuth$){
+      this.onLogout()
     }
-
-    this.isLoading$=this.store.select(fromRoot.getIsLoading)
-
   }
 
   onLogin(){

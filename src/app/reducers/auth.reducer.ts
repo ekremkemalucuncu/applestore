@@ -1,11 +1,11 @@
-import { AuthActions, AUTHENTICATED, NOT_AUTHENTICATED } from "./auth.actions";
+import { AuthActions, AUTHENTICATED, NOT_AUTHENTICATED,FAILED_AUTHENTICATON } from "./auth.actions";
 
 export interface State{
     isAuth: boolean;
 }
 
 const initialState={
-    isAuth:false
+    isAuth:false,
 }
 
 export function appReducer(state = initialState, action:AuthActions){
@@ -16,7 +16,11 @@ export function appReducer(state = initialState, action:AuthActions){
             }
         case NOT_AUTHENTICATED:
             return {
-                isAuth:false
+                isAuth:false,
+            }
+        case FAILED_AUTHENTICATON:
+            return {
+                isAuth:false,
             }
         default:
             return state

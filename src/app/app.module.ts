@@ -10,21 +10,19 @@ import { ProductsComponent } from './products/products.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-// import { appReducer } from './app.reducer';
 import { AngularFireModule } from '@angular/fire/compat'
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { AngularFirestoreModule } from "@angular/fire/compat/firestore"
 import { environment } from '../environments/environment';
-import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideFunctions,getFunctions } from '@angular/fire/functions';
-import { provideMessaging,getMessaging } from '@angular/fire/messaging';
-import { providePerformance,getPerformance } from '@angular/fire/performance';
-import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
-import { provideStorage,getStorage } from '@angular/fire/storage';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { reducers } from './app.reducer';
+import { PERSISTENCE } from '@angular/fire/compat/auth';
+import { ProductsmanagerComponent } from './productsmanager/productsmanager.component';
+import { IphoneComponent } from './products/iphone/iphone.component';
+import { AccessoirComponent } from './products/accessoir/accessoir.component';
+import { IphonemanagerComponent } from './productsmanager/iphonemanager/iphonemanager.component';
+import { AccessoirmanagerComponent } from './productsmanager/accessoirmanager/accessoirmanager.component';
+import { CreateorupdateproductComponent } from './productsmanager/createorupdateproduct/createorupdateproduct.component';
 
 
 @NgModule({
@@ -33,6 +31,12 @@ import { reducers } from './app.reducer';
     AuthenticationComponent,
     ProductsComponent,
     HeaderComponent,
+    ProductsmanagerComponent,
+    IphoneComponent,
+    AccessoirComponent,
+    IphonemanagerComponent,
+    AccessoirmanagerComponent,
+    CreateorupdateproductComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,21 +45,14 @@ import { reducers } from './app.reducer';
     BrowserAnimationsModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAnalytics(() => getAnalytics()),
-    provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()),
-    provideFirestore(() => getFirestore()),
-    provideFunctions(() => getFunctions()),
-    provideMessaging(() => getMessaging()),
-    providePerformance(() => getPerformance()),
-    provideRemoteConfig(() => getRemoteConfig()),
-    provideStorage(() => getStorage()),
+    AngularFirestoreModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers)
   ],
   providers: [
-    ScreenTrackingService,UserTrackingService
+    {
+      provide:PERSISTENCE,useValue:'local'
+    }
   ],
   bootstrap: [AppComponent]
 })

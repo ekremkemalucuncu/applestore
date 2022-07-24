@@ -1,5 +1,10 @@
-div,section{
-    height: 80%;
+div{
+    padding-top: 10%;
+    opacity: 0.95;
+}
+
+mat-card{
+    border-radius: 15px;
 }
 
 mat-card-content{

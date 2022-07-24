@@ -1,0 +1,13 @@
+body{
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+
+
+section{
+    height: 100%;
+    background-image: url("https://www.itl.cat/pngfile/big/126-1262317_colorful-smoke-4k-wallpapers-humo-de-colores-4k.jpg") ;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

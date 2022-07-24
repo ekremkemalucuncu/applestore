@@ -3,5 +3,13 @@
   }
   
 .logo{
-  height: 50px;
+  height: 40px;
+}
+
+mat-toolbar{
+  background-color: black;
+}
+
+button, span{
+  color: white;
 }
