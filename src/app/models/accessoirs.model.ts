@@ -1,9 +1,10 @@
 export class Accessoirs {
 
     constructor(
-        public name:string,
-        public price:number,
-        public id:string,
-        public image:string
+        public name?:string,
+        public price?:number,
+        public imagesource?:string,
+        public description?:string,
+        public id?:string,
     ){}
 }

@@ -27,7 +27,6 @@ export class AuthenticationComponent implements OnInit {
   
   constructor(
     private authService:AuthenticationService,
-    private route:ActivatedRoute,
     private store:Store<fromRoot.State>
   ) { }
 

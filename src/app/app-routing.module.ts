@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationComponent } from './authentication/authentication.component';
-import { AccessoirComponent } from './products/accessoir/accessoir.component';
-import { IphoneComponent } from './products/iphone/iphone.component';
-import { AccessoirmanagerComponent } from './productsmanager/accessoirmanager/accessoirmanager.component';
-import { IphonemanagerComponent } from './productsmanager/iphonemanager/iphonemanager.component';
+import { OffersComponent } from './offers/offers.component';
+import { ProductComponent } from './products/product/product.component';
+import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
+import { ProductmanagerComponent } from './products/productmanager/productmanager.component';
 
 
 
@@ -16,25 +16,21 @@ const routes: Routes = [
     path:'authentication', 
     component:AuthenticationComponent
   },
-  {path:'iphone',component:IphoneComponent},
-  {path:'accessoir',component:AccessoirComponent},
+  {path:'product',component:ProductComponent},
   {
-    path:'iphonemanager',
-    component:IphonemanagerComponent,
+    path:'productmanager',
+    component:ProductmanagerComponent,
     canActivate:[AngularFireAuthGuard] ,
-    data:{authGuardPipe:redirectUnauthorizedToAuthentication}
+    data:{authGuardPipe:redirectUnauthorizedToAuthentication},
   },
   {
-    path:'accessoirmanager',
-    component:AccessoirmanagerComponent,
-    canActivate:[AngularFireAuthGuard],
-    data:{authGuardPipe:redirectUnauthorizedToAuthentication}
+    path:'productmanager/add',component:ProducteditComponent
   },
   {
-    path:'object/',
-    component:AccessoirmanagerComponent,
-    canActivate:[AngularFireAuthGuard],
-    data:{authGuardPipe:redirectUnauthorizedToAuthentication}
+    path:'productmanager/update',component:ProducteditComponent
+  },
+  {
+    path:'offers',component:OffersComponent
   }
 ];
 

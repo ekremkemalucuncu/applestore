@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { MaterialModule } from './material.module';
 import { ProductsComponent } from './products/products.component';
+import { ProductmanagerComponent } from './products/productmanager/productmanager.component';
+import { ProductComponent } from './products/product/product.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -17,12 +19,9 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { reducers } from './app.reducer';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
-import { ProductsmanagerComponent } from './productsmanager/productsmanager.component';
-import { IphoneComponent } from './products/iphone/iphone.component';
-import { AccessoirComponent } from './products/accessoir/accessoir.component';
-import { IphonemanagerComponent } from './productsmanager/iphonemanager/iphonemanager.component';
-import { AccessoirmanagerComponent } from './productsmanager/accessoirmanager/accessoirmanager.component';
-import { CreateorupdateproductComponent } from './productsmanager/createorupdateproduct/createorupdateproduct.component';
+import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
+import { TextSlice } from './pipes/pipe';
+import { OffersComponent } from './offers/offers.component';
 
 
 @NgModule({
@@ -31,12 +30,12 @@ import { CreateorupdateproductComponent } from './productsmanager/createorupdate
     AuthenticationComponent,
     ProductsComponent,
     HeaderComponent,
-    ProductsmanagerComponent,
-    IphoneComponent,
-    AccessoirComponent,
-    IphonemanagerComponent,
-    AccessoirmanagerComponent,
-    CreateorupdateproductComponent,
+    ProductsComponent,
+    ProductmanagerComponent,
+    ProductComponent,
+    ProducteditComponent,
+    TextSlice,
+    OffersComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as AUTH from './reducers/auth.actions'
 import * as fromRoot from './app.reducer'
+import { ProductService } from './services/products.service';
 
 
 @Component({
@@ -17,9 +18,9 @@ export class AppComponent implements OnInit{
   items: Observable<any>;
   
   constructor(
-    // private db:AngularFirestore,
     private fAuth : AngularFireAuth,
-    private store : Store<fromRoot.State>
+    private store : Store<fromRoot.State>,
+    private productservice:ProductService
   ){
   }
   
@@ -32,13 +33,7 @@ export class AppComponent implements OnInit{
         }
       )
       
-    //   this.db.collection('iPhones').valueChanges()
-    //   .subscribe(
-    //     result =>{
-    //     console.log(result)
-    //   }
-    // )
+      this.productservice.fetchProducts('iPhones');
+      this.productservice.fetchProducts('Accessoirs');
   }
-
-
 }
