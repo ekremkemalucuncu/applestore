@@ -1,4 +1,4 @@
-export class Accessoirs {
+export class Accessoir {
 
     constructor(
         public name?:string,

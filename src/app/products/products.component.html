@@ -1,12 +1,17 @@
 
-    <div *ngIf="from==='iphonemanager' || from==='accessoirmanager'" class="button-container">
+    <div *ngIf="from==='iphonemanager' || from=== 'accessoirmanager' ||from==='offermanager'" class="button-container">
         <button class="block" mat-stroked-button color="accent" [routerLink]="['add',{product: product}]">Add new {{product}}</button>
     </div>
-    
+
     <mat-grid-list cols="4" rowHeight="1:1">
         <mat-grid-tile *ngFor="let element of fetchedProducts">
             <mat-card class="example-card" >
-                <img mat-card-image src="{{element.imagesource}}" alt="{{element.name}}">
+                <!-- Hatayı Düzelt -->
+                <img *ngIf="product!='Offers'" mat-card-image src="{{element.imagesource}}" alt="{{element.name}}" class="oneImage">
+                <div class="divForTwoOfferImage" *ngIf="product==='Offers'">
+                    <img mat-card-image src="{{element['iphone']['imagesource']}}" alt="" class="firstImage">
+                    <img mat-card-image src="{{element['accessoir']['imagesource']}}" alt="" class="secondImage">
+                </div>
                 <mat-card-actions>
                     <h3 style="padding-left:10px">{{element.name | textslice:35}}</h3>
                     <h2 style="padding-left:10px">{{element.price}} $</h2>

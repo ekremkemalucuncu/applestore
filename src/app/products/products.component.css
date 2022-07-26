@@ -1,15 +1,31 @@
 .example-card {
     width: 300px;
-    height: 350px;
+    height: 360px;
     border-radius:15px;
   }
 
-  img{
+  .oneImage,.divForTwoOfferImage{
     height: 220px;
     width: auto;
     display: block;
     margin: auto;
     padding: 10px 0px;
+  }
+
+  .firstImage{
+    height: 200px;
+    width: auto;
+    position: relative;
+    top: 25px;
+    left: 50px;
+  }
+
+  .secondImage{
+    height: 130px;
+    width: auto;
+    position: absolute;
+    top: 130px;
+    right: 70px;
   }
   
   .addCart{

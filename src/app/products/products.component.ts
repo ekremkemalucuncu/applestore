@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Accessoirs } from '../models/accessoirs.model';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Accessoir } from '../models/accessoirs.model';
 import { Iphone } from '../models/iphone.model';
 import { ProductService } from '../services/products.service'
+import { take } from 'rxjs/operators'
+import { iPhones,Accessoirs,Offers } from '../shared/firestore.collections';
 
 @Component({
   selector: 'app-products',
@@ -15,7 +17,7 @@ export class ProductsComponent implements OnInit {
   @Input() from:string;
   product:string;
   managing:boolean;
-  fetchedProducts:Iphone[]|Accessoirs[];
+  fetchedProducts:Iphone[]|Accessoir[];
   
 
   constructor(
@@ -24,42 +26,30 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.from == 'iphonemanager'){
-      this.product='iPhones';
-      this.managing=true;
-      this.productservice.getProduct('iphone').subscribe(
-        productlist=>{
-          this.fetchedProducts=productlist
-        }
-      )
+    if (this.from.includes('iphone')){
+      this.product=iPhones
     }
-    else if (this.from == 'accessoirmanager'){
-      this.product='Accessoirs';
-      this.managing=true;
-      this.productservice.getProduct('accessoir').subscribe(
-        productlist=>{
-          this.fetchedProducts=productlist
-        }
-      )
+    else if(this.from.includes('accessoir')){
+      this.product=Accessoirs
     }
-    else if (this.from =="iphone"){
-      this.product='iPhones';
-      this.managing=false;
-      this.productservice.getProduct('iphone').subscribe(
-        productlist=>{
-          this.fetchedProducts=productlist
-        }
-      )
+    else if(this.from.includes('offer')){
+      this.product=Offers
     }
-    else if (this.from == 'accessoir'){
-      this.product='Accessoirs';
-      this.managing=false;
-      this.productservice.getProduct('accessoir').subscribe(
-        productlist=>{
-          this.fetchedProducts=productlist
-        }
-      )
-    }
-  }
 
+    if (this.from.includes('manager')){
+      this.managing=true
+    }
+    else{
+      this.managing=false
+    }
+    
+
+    this.productservice.getProduct(this.product)
+    .pipe(take(1))
+    .subscribe(
+      productlist=>{
+        this.fetchedProducts=productlist
+      }
+    )
+  }
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Accessoirs } from 'src/app/models/accessoirs.model';
+import { Accessoir } from 'src/app/models/accessoirs.model';
 import { Iphone } from 'src/app/models/iphone.model';
 import { ProductService } from 'src/app/services/products.service';
-
+import { FormCreation } from '../../../services/formcreation.service';
+import { iPhones,Accessoirs,Offers } from 'src/app/shared/firestore.collections';
 
 @Component({
   selector: 'app-productedit',
@@ -16,106 +17,82 @@ export class ProducteditComponent implements OnInit {
   form:FormGroup;
   product:string;
   id:string;
-  productUpdate:Iphone|Accessoirs
+  productUpdate:Iphone|Accessoir
+  formProduct:any;
+  fetchedIphones:any;
+  fetchedAccessoirs:any;
+  accessoirprice:number;
+  iphoneprice:number;
 
   constructor(
     private productservice:ProductService,
     private route:ActivatedRoute,
     private router:Router,
+    private formcreation:FormCreation
   ) { }
 
   ngOnInit(): void {
     this.product=this.route.snapshot.params['product']
     this.id=this.route.snapshot.params['id']
 
-  
-
-    if(this.product=='iPhones'){
-      this.form = new FormGroup({
-        name: new FormControl(null,[Validators.required]),
-        model: new FormControl(null,[Validators.required]),
-        price: new FormControl(null,[Validators.required]),
-        imagesource: new FormControl(null,[Validators.required]),
-        color: new FormControl(null,[Validators.required]),
-        screensize: new FormControl(null,[Validators.required]),
-        sku: new FormControl(null,[Validators.required]),
-        description: new FormControl(null,[Validators.required]),
-      })
-
-      if(this.id){
-        this.productservice.getProductByID(this.id,'iPhones').subscribe(
-          (data) => {
-            if (data){
-              this.form.get('name').setValue(data['name'])
-              this.form.get('model').setValue(data['model'])
-              this.form.get('price').setValue(data['price'])
-              this.form.get('imagesource').setValue(data['imagesource'])
-              this.form.get('color').setValue(data['color'])
-              this.form.get('screensize').setValue(data['name'])
-              this.form.get('sku').setValue(data['sku'])
-              this.form.get('description').setValue(data['description'])
-            }
-          })
-      }
+    if(this.product==iPhones){
+      this.form=this.formcreation.formCreationIphone(this.product,this.id,this.form)
     }
-
-    else if(this.product=='Accessoirs'){
-      this.form = new FormGroup({
-        name: new FormControl(null,[Validators.required]),
-        price: new FormControl(null,[Validators.required]),
-        imagesource: new FormControl(null,[Validators.required]),
-        description: new FormControl(null,[Validators.required]),
-      })
-
-      if(this.id){
-        this.productservice.getProductByID(this.id,'Accessoirs').subscribe(
-          (data) => {
-            if (data){
-              this.form.get('name').setValue(data['name'])
-              this.form.get('price').setValue(data['price'])
-              this.form.get('imagesource').setValue(data['imagesource'])
-              this.form.get('description').setValue(data['description'])
-            }
-          })
-      }
+    else if(this.product==Accessoirs){
+      this.form=this.formcreation.formCreationAccessoir(this.product,this.id,this.form)
     }
-
-
-    
+    else if(this.product==Offers){
+      this.form=this.formcreation.formCreationOffer(this.product,this.id,this.form)['form']
+      this.fetchedIphones=this.formcreation.formCreationOffer(this.product,this.id,this.form)['fetchedIphones']
+      this.fetchedAccessoirs=this.formcreation.formCreationOffer(this.product,this.id,this.form)['fetchedAccessoirs']
+    }
   }
 
-
+  
   onSubmit(){
-    if (this.product=='iPhone'){
-      this.productservice.createProducts('iphone',this.form);
+    if (this.product==iPhones){
+      this.productservice.createProducts(this.product,this.form);
       this.router.navigate(['/productmanager'],{queryParams:{product:'iphone'}})
     }
-    else{
-      this.productservice.createProducts('accessoir',this.form);
+    else if(this.product ==Accessoirs){
+      this.productservice.createProducts(this.product,this.form);
       this.router.navigate(['/productmanager',{product:'accessoir'}])
     }
-  }
-
-
-  onUpdate(){
-    if (this.product=='iPhones'){
-      this.productservice.updateProducts(this.product,this.form,this.id);
-      this.router.navigate(['/productmanager',{product:'iphone'}]);
-    }
-    else{
-      this.productservice.updateProducts(this.product,this.form,this.id);
-      this.router.navigate(['/productmanager',{product:'accessoir'}])
+    else if(this.product ==Offers){
+      this.productservice.createProducts(this.product,this.form);
+      this.router.navigate(['/productmanager',{product:'offer'}])
     }
     this.productservice.fetchProducts(this.product);
   }
 
+
+  onUpdate(){
+    if (this.product==iPhones){
+      this.productservice.updateProducts(this.product,this.form,this.id);
+      this.router.navigate(['/productmanager',{product:'iphone'}]);
+    }
+    else if(this.product==Accessoirs){
+      this.productservice.updateProducts(this.product,this.form,this.id);
+      this.router.navigate(['/productmanager',{product:'accessoir'}])
+    }
+    else if(this.product==Offers){
+      this.productservice.updateProducts(this.product,this.form,this.id);
+      this.router.navigate(['/productmanager',{product:'offer'}])
+    }
+    this.productservice.fetchProducts(this.product);
+  }
+
+
   onDelete(){
     this.productservice.deleteProduct(this.product,this.id)
-    if (this.product=='iPhones'){
+    if (this.product==iPhones){
       this.router.navigate(['/productmanager',{product:'iphone'}])
     }
-    else{
+    else if(this.product==Accessoirs){
       this.router.navigate(['/productmanager',{product:'accessoir'}])
+    }
+    else if(this.product==Offers){
+      this.router.navigate(['/productmanager',{product:'offer'}])
     }
     this.productservice.fetchProducts(this.product);
   }

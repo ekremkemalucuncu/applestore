@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationComponent } from './authentication/authentication.component';
-import { OffersComponent } from './offers/offers.component';
 import { ProductComponent } from './products/product/product.component';
 import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
 import { ProductmanagerComponent } from './products/productmanager/productmanager.component';
@@ -29,9 +28,7 @@ const routes: Routes = [
   {
     path:'productmanager/update',component:ProducteditComponent
   },
-  {
-    path:'offers',component:OffersComponent
-  }
+
 ];
 
 @NgModule({

@@ -6,9 +6,10 @@
     <span class="example-spacer"></span>
     <span> <button mat-button [routerLink]="['/product',{product:'iphone'}]">iPhone</button></span>
     <span> <button mat-button [routerLink]="['/product',{product:'accessoir'}]">Accessoir</button></span>
-    <span> <button mat-button [routerLink]="['/offers']">Offers</button></span>
+    <span> <button mat-button [routerLink]="['/product',{product:'offer'}]">Offers</button></span>
     <span> <button *ngIf="(isAuth$ | async)" mat-button [routerLink]="['/productmanager',{product:'iphone'}]">iPhoneManager</button></span>
     <span> <button *ngIf="(isAuth$ | async)" mat-button [routerLink]="['/productmanager',{product:'accessoir'}]">AccessoirManager</button></span>
+    <span> <button *ngIf="(isAuth$ | async)" mat-button [routerLink]="['/productmanager',{product:'offer'}]">OfferManager</button></span>
     <span class="example-spacer"></span>
     <button mat-icon-button >
         <mat-icon>shopping_cart</mat-icon>

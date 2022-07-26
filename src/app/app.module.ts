@@ -16,12 +16,12 @@ import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore"
 import { environment } from '../environments/environment';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { reducers } from './app.reducer';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
 import { TextSlice } from './pipes/pipe';
-import { OffersComponent } from './offers/offers.component';
+import { FormCreation } from './services/formcreation.service';
 
 
 @NgModule({
@@ -35,7 +35,6 @@ import { OffersComponent } from './offers/offers.component';
     ProductComponent,
     ProducteditComponent,
     TextSlice,
-    OffersComponent
   ],
   imports: [
     BrowserModule,
@@ -45,13 +44,14 @@ import { OffersComponent } from './offers/offers.component';
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
   ],
   providers: [
     {
       provide:PERSISTENCE,useValue:'local'
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })

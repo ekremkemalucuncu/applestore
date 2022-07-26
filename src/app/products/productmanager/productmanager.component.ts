@@ -1,5 +1,6 @@
 import { Component, OnInit, Output ,EventEmitter} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductService } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-productmanager',
@@ -12,13 +13,14 @@ export class ProductmanagerComponent implements OnInit {
 
   constructor(
     private route:ActivatedRoute,
-    private router:Router
+    private router:Router,
   ) { 
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(): void {
-    this.from=this.route.snapshot.params['product']+'manager'
+    this.from=this.route.snapshot.params['product']+'manager';
+   
   }
 
 }

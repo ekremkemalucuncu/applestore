@@ -35,5 +35,6 @@ export class AppComponent implements OnInit{
       
       this.productservice.fetchProducts('iPhones');
       this.productservice.fetchProducts('Accessoirs');
+      this.productservice.fetchProducts('Offers');
   }
 }

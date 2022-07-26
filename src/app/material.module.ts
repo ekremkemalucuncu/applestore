@@ -10,6 +10,10 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatGridListModule } from "@angular/material/grid-list"
 import { MatDividerModule } from "@angular/material/divider"
 import { MatTooltipModule } from "@angular/material/tooltip"
+import { MatSelectModule } from "@angular/material/select"
+// import {} from "@angular/material/op"
+
+
 
 @NgModule({
     imports:[
@@ -23,7 +27,8 @@ import { MatTooltipModule } from "@angular/material/tooltip"
         MatProgressSpinnerModule,
         MatGridListModule,
         MatDividerModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatSelectModule
     ],
     exports:[
         MatButtonModule,
@@ -36,7 +41,8 @@ import { MatTooltipModule } from "@angular/material/tooltip"
         MatProgressSpinnerModule,
         MatGridListModule,
         MatDividerModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatSelectModule
     ]
 })
 export class MaterialModule {}
