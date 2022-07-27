@@ -9,11 +9,6 @@
                 <img *ngIf="product!='Offers'" mat-card-image src="{{element.imagesource}}" alt="{{element.name}}" class="oneImage">
                 <button *ngIf="product=='Offers'" mat-icon-button class="rate">{{element['rate']}}%</button>
                 <div class="divForTwoOfferImage" *ngIf="product==='Offers'">
-<<<<<<< HEAD
-=======
-                    <!-- <img mat-card-image src="{{element['iphone']['imagesource']}}" alt="" class="firstImage">
-                    <img mat-card-image src="{{element['accessoir']['imagesource']}}" alt="" class="secondImage"> -->
->>>>>>> 544149201b588bfffcf8d6ee14362ecc25c4a210
                     <img mat-card-image [src]="element['iphone']?.['imagesource']" alt="" class="firstImage">
                     <img mat-card-image [src]="element['accessoir']?.['imagesource']" alt="" class="secondImage">
                 </div>

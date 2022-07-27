@@ -48,7 +48,6 @@ export class ProducteditComponent implements OnInit {
       this.selectedaccessoir=this.formcreation.formCreationOffer(this.product,this.id,this.form)['selectedaccessoir']
       this.selectediphone=this.formcreation.formCreationOffer(this.product,this.id,this.form)['selectediphone']
     }
-
   }
 
   
