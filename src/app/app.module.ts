@@ -15,15 +15,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireModule } from '@angular/fire/compat'
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore"
 import { environment } from '../environments/environment';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { reducers } from './app.reducer';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
 import { TextSlice } from './shared/pipes/pipe';
-import { FormCreation } from './core/services/formcreation.service';
 import { EffectsModule } from '@ngrx/effects';
 import { PhonesEffects } from './shared/reducers/phones/phones.effects';
+import { AuthenticationEffects } from './shared/reducers/auth.effects';
 
 @NgModule({
   declarations: [
@@ -48,7 +47,7 @@ import { PhonesEffects } from './shared/reducers/phones/phones.effects';
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([PhonesEffects])
+    EffectsModule.forRoot([PhonesEffects, AuthenticationEffects])
   ],
   providers: [
     {

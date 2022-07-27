@@ -2,8 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Accessoir } from '../shared/models/accessoirs.model';
 import { Iphone } from '../shared/models/iphone.model';
 import { ProductService } from '../core/services/products.service'
-import { take } from 'rxjs/operators'
-import { iPhones, Accessoirs, Offers } from '../shared/firestore.collections';
+import {  Accessoirs, Offers } from '../shared/firestore.collections';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer';
 import * as phonesActions from '../shared/reducers/phones/phones.actions';

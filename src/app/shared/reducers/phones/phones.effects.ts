@@ -12,7 +12,7 @@ export class PhonesEffects {
 
   getPhones = createEffect(() => {
     return this.actions.pipe(
-      ofType(phonesActions.getPhonesSuccess),
+      ofType(phonesActions.getPhonesStarted),
       withLatestFrom(this.store.select('phones')),
       switchMap(([action, phoneState]) => {
         if (phoneState.phonesLoaded) {
