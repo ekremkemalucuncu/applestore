@@ -20,11 +20,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { reducers } from './app.reducer';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
+<<<<<<< HEAD
 import { TextSlice } from './shared/pipes/textslicer.pipe';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './shared/store/products/products.effects';
 import { AuthenticationEffects } from './shared/store/auth/auth.effects';
 
+=======
+import { TextSlice } from './shared/pipes/pipe';
+import { FormCreation } from './core/services/formcreation.service';
+import { EffectsModule } from '@ngrx/effects';
+import { PhonesEffects } from './shared/reducers/phones/phones.effects';
+>>>>>>> 544149201b588bfffcf8d6ee14362ecc25c4a210
 
 @NgModule({
   declarations: [
@@ -49,11 +56,15 @@ import { AuthenticationEffects } from './shared/store/auth/auth.effects';
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
+<<<<<<< HEAD
     EffectsModule.forRoot([ProductEffects,AuthenticationEffects]),
+=======
+    EffectsModule.forRoot([PhonesEffects])
+>>>>>>> 544149201b588bfffcf8d6ee14362ecc25c4a210
   ],
   providers: [
     {
-      provide:PERSISTENCE,useValue:'local'
+      provide: PERSISTENCE, useValue: 'local'
     },
   ],
   bootstrap: [AppComponent]

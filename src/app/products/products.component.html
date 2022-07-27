@@ -9,6 +9,11 @@
                 <img *ngIf="product!='Offers'" mat-card-image src="{{element.imagesource}}" alt="{{element.name}}" class="oneImage">
                 <button *ngIf="product=='Offers'" mat-icon-button class="rate">{{element['rate']}}%</button>
                 <div class="divForTwoOfferImage" *ngIf="product==='Offers'">
+<<<<<<< HEAD
+=======
+                    <!-- <img mat-card-image src="{{element['iphone']['imagesource']}}" alt="" class="firstImage">
+                    <img mat-card-image src="{{element['accessoir']['imagesource']}}" alt="" class="secondImage"> -->
+>>>>>>> 544149201b588bfffcf8d6ee14362ecc25c4a210
                     <img mat-card-image [src]="element['iphone']?.['imagesource']" alt="" class="firstImage">
                     <img mat-card-image [src]="element['accessoir']?.['imagesource']" alt="" class="secondImage">
                 </div>
@@ -18,7 +23,7 @@
                     <span *ngIf="product==='Offers'" fxLayout="col">
                         <h2 style="padding-left:10px">{{element.price}} $</h2>
                         <h4 style="text-decoration:line-through;padding-left:5px;color:red">{{element['oldprice']}}$</h4>
-                    </span> 
+                    </span>
                     <button *ngIf="!managing" class="addCart" mat-stroked-button color="warn">Add to Cart</button>
                     <button *ngIf="managing" class="addCart" mat-stroked-button color="warn" [routerLink]="['update',{product:product,id:element.id}]">Edit {{product}}</button>
                 </mat-card-actions>
