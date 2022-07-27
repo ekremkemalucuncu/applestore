@@ -4,8 +4,8 @@ import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import * as fromRoot from '../../app.reducer'
-import * as AUTH from '../../shared/reducers/auth.actions'
-import * as LOADING from '../../shared/reducers/loading.actions'
+import * as AUTH from '../../shared/store/auth/auth.actions'
+import * as LOADING from '../../shared/store/loading/loading.actions'
 
 
 @Injectable({

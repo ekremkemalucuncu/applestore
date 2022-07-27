@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import * as AUTH from './shared/reducers/auth.actions'
+import * as AUTH from './shared/store/auth/auth.actions'
 import * as fromRoot from './app.reducer'
 
 

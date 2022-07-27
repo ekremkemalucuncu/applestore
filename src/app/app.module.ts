@@ -20,8 +20,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { reducers } from './app.reducer';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
-import { TextSlice } from './shared/pipes/pipe';
-import { FormCreation } from './core/services/formcreation.service';
+import { TextSlice } from './shared/pipes/textslicer.pipe';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductEffects } from './shared/store/products/products.effects';
+import { AuthenticationEffects } from './shared/store/auth/auth.effects';
 
 
 @NgModule({
@@ -47,6 +49,7 @@ import { FormCreation } from './core/services/formcreation.service';
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([ProductEffects,AuthenticationEffects]),
   ],
   providers: [
     {

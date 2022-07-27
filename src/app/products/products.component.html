@@ -3,15 +3,14 @@
         <button class="block" mat-stroked-button color="accent" [routerLink]="['add',{product: product}]">Add new {{product}}</button>
     </div>
 
-    <mat-grid-list cols="4" rowHeight="1:1">
+    <mat-grid-list cols="4" rowHeight="1:1" *ngIf="!loading">
         <mat-grid-tile *ngFor="let element of fetchedProducts">
             <mat-card class="example-card" >
-                <!-- Hatayı Düzelt -->
                 <img *ngIf="product!='Offers'" mat-card-image src="{{element.imagesource}}" alt="{{element.name}}" class="oneImage">
                 <button *ngIf="product=='Offers'" mat-icon-button class="rate">{{element['rate']}}%</button>
                 <div class="divForTwoOfferImage" *ngIf="product==='Offers'">
-                    <img mat-card-image src="{{element['iphone']['imagesource']}}" alt="" class="firstImage">
-                    <img mat-card-image src="{{element['accessoir']['imagesource']}}" alt="" class="secondImage">
+                    <img mat-card-image [src]="element['iphone']?.['imagesource']" alt="" class="firstImage">
+                    <img mat-card-image [src]="element['accessoir']?.['imagesource']" alt="" class="secondImage">
                 </div>
                 <mat-card-actions>
                     <h3 style="padding-left:10px">{{element.name | textslice:35}}</h3>
@@ -26,3 +25,7 @@
             </mat-card>
         </mat-grid-tile>
     </mat-grid-list>
+
+    <div *ngIf="loading" fxLayoutAlign="center center">
+        <mat-spinner [diameter]="300" color="accent" style="position:absolute;top:30%"></mat-spinner>
+    </div>

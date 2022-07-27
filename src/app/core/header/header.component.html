@@ -17,7 +17,7 @@
     <button *ngIf="!isAuth" mat-icon-button [routerLink]="['/authentication']">
         <mat-icon>login</mat-icon>
     </button>
-    <button *ngIf="isAuth" mat-icon-button [routerLink]="['/authentication']">
+    <button (click)="logout()" *ngIf="isAuth" mat-icon-button [routerLink]="['/authentication']">
         <mat-icon>logout</mat-icon>
     </button>
 </mat-toolbar>

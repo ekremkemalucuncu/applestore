@@ -3,9 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../core/services/authentication.service';
 import * as fromRoot from '../app.reducer'
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import * as fromAuth from '../shared/reducers/auth.reducer'
-
+import { Observable, tap } from 'rxjs';
+import * as FROMAUTH from '../shared/store/auth/auth.reducer'
+import * as AUTH from '../shared/store/auth/auth.actions';
 
 @Component({
   selector: 'app-authentication',
@@ -14,56 +14,55 @@ import * as fromAuth from '../shared/reducers/auth.reducer'
 })
 export class AuthenticationComponent implements OnInit {
 
-  signInForm:FormGroup;
-  signUpForm:FormGroup;
-  isLoading: boolean;
-  isAuth:boolean;
-  Message:Promise<any>
+  signInForm: FormGroup;
+  signUpForm: FormGroup;
+  isAuth: boolean;
+  Message: Promise<any>
   hidesignin = true;
-  hidesignup=true;
-  storeSubAuth:Subscription;
-  storeSubLoading:Subscription;
+  hidesignup = true;
+  authState: Observable<FROMAUTH.State>;
 
-  
   constructor(
-    private authService:AuthenticationService,
-    private store:Store<fromRoot.State>
+    private authService: AuthenticationService,
+    private store: Store<fromRoot.State>
   ) { }
 
   ngOnInit(): void {
     this.signInForm = new FormGroup({
-      email:new FormControl(null,[Validators.required,Validators.email]),
-      password:new FormControl(null,[Validators.required])
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required])
     });
 
     this.signUpForm = new FormGroup({
-      email:new FormControl(null,[Validators.required,Validators.email]),
-      password:new FormControl(null,[Validators.required])
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required])
     })
 
-    this.storeSubAuth= this.store.select('auth').subscribe(
-      authState => { this.isAuth = authState.isAuth}
+    this.authState = this.store.select('auth').pipe(
+      tap((authState) => { this.isAuth = authState.isAuth })
     )
 
-    this.storeSubLoading = this.store.select('loading').subscribe(
-      loadingState => {this.isLoading=loadingState.isLoaded}
-    )
-
-
-    if (this.isAuth){
+    if (this.isAuth) {
+      console.log("logout");
       this.onLogout()
     }
   }
 
-  onLogin(){
-   this.authService.signUser(this.signInForm)
+  onLogin() {
+    var email = this.signInForm.value.email;
+    var password = this.signInForm.value.password;
+    this.store.dispatch(AUTH.LoginStarted({ email: email, password: password }));
   }
 
-  onRegister(){
-    this.authService.registerUser(this.signUpForm) 
+  onRegister() {
+    var email = this.signUpForm.value.email;
+    var password = this.signUpForm.value.password;
+    this.store.dispatch(AUTH.SignupStarted({ email: email, password: password }));
   }
 
-  onLogout(){
-    this.authService.logout()
+  onLogout() {
+    console.log("logout");
+    this.store.dispatch(AUTH.LogOut());
+    // this.authService.logout()
   }
 }

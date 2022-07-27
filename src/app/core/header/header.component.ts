@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import * as fromRoot from '../../app.reducer';
-import * as fromAuth from '../../shared/reducers/auth.reducer'
+import * as AUTH from 'src/app/shared/store/auth/auth.actions'
+
 
 
 @Component({
@@ -12,7 +13,6 @@ import * as fromAuth from '../../shared/reducers/auth.reducer'
 })
 export class HeaderComponent implements OnInit {
 
-  // isAuth$:Observable<fromAuth.State>;
   isAuth:boolean;
   storeSub:Subscription;
 
@@ -28,4 +28,9 @@ export class HeaderComponent implements OnInit {
       } 
     );
   }
+
+  logout() {
+    this.store.dispatch(AUTH.LogOut());
+  }
+
 }
