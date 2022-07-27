@@ -39,13 +39,12 @@
                     </mat-select>
                 </mat-form-field>
             </mat-grid-tile>
-            <!-- <mat-grid-tile *ngIf="product==='Offers'"></mat-grid-tile> -->
             <mat-grid-tile [rowspan]="2">
                 <mat-form-field appearance="outline">
                     <mat-label>Price</mat-label>
                     <input formControlName="price" matInput required type="number">
                     <mat-icon matSuffix>attach_money</mat-icon>
-                    <mat-hint>Price without Offer is</mat-hint>
+                    <!-- <mat-hint>Price without Offer is</mat-hint> -->
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [rowspan]="2" *ngIf="product==='iPhones'|| product==='Accessoirs'">
