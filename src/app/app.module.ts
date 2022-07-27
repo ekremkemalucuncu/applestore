@@ -22,7 +22,8 @@ import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
 import { TextSlice } from './shared/pipes/pipe';
 import { FormCreation } from './core/services/formcreation.service';
-
+import { EffectsModule } from '@ngrx/effects';
+import { PhonesEffects } from './shared/reducers/phones/phones.effects';
 
 @NgModule({
   declarations: [
@@ -47,10 +48,11 @@ import { FormCreation } from './core/services/formcreation.service';
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([PhonesEffects])
   ],
   providers: [
     {
-      provide:PERSISTENCE,useValue:'local'
+      provide: PERSISTENCE, useValue: 'local'
     },
   ],
   bootstrap: [AppComponent]
