@@ -1,6 +1,6 @@
 <div fxLayoutAlign="center center">
 
-  <mat-card  *ngIf="authState | async as authState" class="example-card">
+  <mat-card *ngIf="authState | async as authState" class="example-card">
 
     <mat-tab-group mat-align-tabs="center">
 
@@ -15,11 +15,17 @@
               <mat-label>Enter your email</mat-label>
               <input formControlName="email" matInput placeholder="apple@icloud.com" required type="email">
               <mat-icon matSuffix>email</mat-icon>
+              <mat-error>
+                <app-validation-message [control]="signInForm.controls['email']"></app-validation-message>
+              </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [style.width.px]=250>
               <mat-label>Enter your password</mat-label>
               <input formControlName="password" matInput placeholder="Enter your password" required
                 [type]="hidesignin ? 'password' : 'text'">
+              <mat-error>
+                <app-validation-message [control]="signInForm.controls['password']"></app-validation-message>
+              </mat-error>
               <button type="button" mat-icon-button matSuffix (click)="hidesignin = !hidesignin"
                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidesignin">
                 <mat-icon>{{hidesignin ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -28,7 +34,6 @@
             <button type="submit" mat-button>Login</button>
             <mat-error> {{ authState.loginError }} </mat-error>
           </form>
-
           <mat-spinner *ngIf="authState.isLoginInProgress" fxLayout="row" fxLayoutAlign="space-between center">
           </mat-spinner>
         </mat-card-content>
@@ -47,11 +52,17 @@
               <mat-label>Enter your email</mat-label>
               <input formControlName="email" matInput placeholder="apple@icloud.com" required type="email">
               <mat-icon matSuffix>email</mat-icon>
+              <mat-error>
+                <app-validation-message [control]="signUpForm.controls['email']"></app-validation-message>
+              </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" [style.width.px]=250>
               <mat-label>Enter your password</mat-label>
               <input formControlName="password" matInput placeholder="Enter your password" required
                 [type]="hidesignup ? 'password' : 'text'">
+                <mat-error>
+                  <app-validation-message [control]="signUpForm.controls['password']"></app-validation-message>
+                </mat-error>
               <button type="button" mat-icon-button matSuffix (click)="hidesignup = !hidesignup"
                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidesignup">
                 <mat-icon>{{hidesignup ? 'visibility_off' : 'visibility'}}</mat-icon>

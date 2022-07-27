@@ -19,10 +19,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { reducers } from './app.reducer';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
-import { TextSlice } from './shared/pipes/pipe';
 import { EffectsModule } from '@ngrx/effects';
 import { PhonesEffects } from './shared/reducers/phones/phones.effects';
 import { AuthenticationEffects } from './shared/reducers/auth.effects';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,10 +34,10 @@ import { AuthenticationEffects } from './shared/reducers/auth.effects';
     ProductmanagerComponent,
     ProductComponent,
     ProducteditComponent,
-    TextSlice,
   ],
   imports: [
     BrowserModule,
+    SharedModule,
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
