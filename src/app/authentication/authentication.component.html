@@ -1,71 +1,70 @@
 <div fxLayoutAlign="center center">
 
-    <mat-card  *ngIf="authState | async as authState" class="example-card">
-  
-      <mat-tab-group mat-align-tabs="center">
-  
-        <mat-tab label="Sign In">
-  
-          <mat-card-content fxLayoutAlign="center center">
-  
-            <form *ngIf="!authState.isLoginInProgress" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px"
-              [formGroup]="signInForm" (ngSubmit)="onLogin()">
-  
-              <mat-form-field appearance="outline" [style.width.px]=250>
-                <mat-label>Enter your email</mat-label>
-                <input formControlName="email" matInput placeholder="apple@icloud.com" required type="email">
-                <mat-icon matSuffix>email</mat-icon>
-              </mat-form-field>
-              <mat-form-field appearance="outline" [style.width.px]=250>
-                <mat-label>Enter your password</mat-label>
-                <input formControlName="password" matInput placeholder="Enter your password" required
-                  [type]="hidesignin ? 'password' : 'text'">
-                <button type="button" mat-icon-button matSuffix (click)="hidesignin = !hidesignin"
-                  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidesignin">
-                  <mat-icon>{{hidesignin ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-              </mat-form-field>
-              <button type="submit" mat-button>Login</button>
-              <mat-error> {{ authState.loginError }} </mat-error>
-            </form>
-  
-            <mat-spinner *ngIf="authState.isLoginInProgress" fxLayout="row" fxLayoutAlign="space-between center">
-            </mat-spinner>
-          </mat-card-content>
-  
-        </mat-tab>
-  
-  
-        <mat-tab label="Sign Up" fxLayoutAlign="center center">
-  
-          <mat-card-content>
-  
-            <form *ngIf="!authState.isSignupInProgress" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px"
-              [formGroup]="signUpForm" (ngSubmit)="onRegister()">
-  
-              <mat-form-field appearance="outline" [style.width.px]=250>
-                <mat-label>Enter your email</mat-label>
-                <input formControlName="email" matInput placeholder="apple@icloud.com" required type="email">
-                <mat-icon matSuffix>email</mat-icon>
-              </mat-form-field>
-              <mat-form-field appearance="outline" [style.width.px]=250>
-                <mat-label>Enter your password</mat-label>
-                <input formControlName="password" matInput placeholder="Enter your password" required
-                  [type]="hidesignup ? 'password' : 'text'">
-                <button type="button" mat-icon-button matSuffix (click)="hidesignup = !hidesignup"
-                  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidesignup">
-                  <mat-icon>{{hidesignup ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-              </mat-form-field>
-  
-              <button type="submit" mat-button>Register</button>
-              <mat-error> {{ authState.signupError }} </mat-error>
-            </form>
-            <mat-spinner fxLayout="row" *ngIf="authState.isSignupInProgress">
-            </mat-spinner>
-          </mat-card-content>
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card>
-  </div>
-  
+  <mat-card  *ngIf="authState | async as authState" class="example-card">
+
+    <mat-tab-group mat-align-tabs="center">
+
+      <mat-tab label="Sign In">
+
+        <mat-card-content fxLayoutAlign="center center">
+
+          <form *ngIf="!authState.isLoginInProgress" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px"
+            [formGroup]="signInForm" (ngSubmit)="onLogin()">
+
+            <mat-form-field appearance="outline" [style.width.px]=250>
+              <mat-label>Enter your email</mat-label>
+              <input formControlName="email" matInput placeholder="apple@icloud.com" required type="email">
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [style.width.px]=250>
+              <mat-label>Enter your password</mat-label>
+              <input formControlName="password" matInput placeholder="Enter your password" required
+                [type]="hidesignin ? 'password' : 'text'">
+              <button type="button" mat-icon-button matSuffix (click)="hidesignin = !hidesignin"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidesignin">
+                <mat-icon>{{hidesignin ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+            <button type="submit" mat-button>Login</button>
+            <mat-error> {{ authState.loginError }} </mat-error>
+          </form>
+
+          <mat-spinner *ngIf="authState.isLoginInProgress" fxLayout="row" fxLayoutAlign="space-between center">
+          </mat-spinner>
+        </mat-card-content>
+
+      </mat-tab>
+
+
+      <mat-tab label="Sign Up" fxLayoutAlign="center center">
+
+        <mat-card-content>
+
+          <form *ngIf="!authState.isSignupInProgress" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px"
+            [formGroup]="signUpForm" (ngSubmit)="onRegister()">
+
+            <mat-form-field appearance="outline" [style.width.px]=250>
+              <mat-label>Enter your email</mat-label>
+              <input formControlName="email" matInput placeholder="apple@icloud.com" required type="email">
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" [style.width.px]=250>
+              <mat-label>Enter your password</mat-label>
+              <input formControlName="password" matInput placeholder="Enter your password" required
+                [type]="hidesignup ? 'password' : 'text'">
+              <button type="button" mat-icon-button matSuffix (click)="hidesignup = !hidesignup"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidesignup">
+                <mat-icon>{{hidesignup ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <button type="submit" mat-button>Register</button>
+            <mat-error> {{ authState.signupError }} </mat-error>
+          </form>
+          <mat-spinner fxLayout="row" *ngIf="authState.isSignupInProgress">
+          </mat-spinner>
+        </mat-card-content>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
