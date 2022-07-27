@@ -17,13 +17,13 @@ import { Offer } from '../shared/models/offers.model';
 export class ProductsComponent implements OnInit {
 
 
- 
+
   @Input() from:string;
   product:string;
   managing:boolean;
   loading:boolean
   fetchedProducts:Iphone[] | Accessoir[] | Offer[]
-  
+
 
   constructor(
     private productservice:ProductService,
@@ -50,6 +50,8 @@ export class ProductsComponent implements OnInit {
       this.product=Accessoirs
     }
     else if(this.from.includes('offer')){
+      this.store.dispatch(productActions.getIPhonesStarted());
+      this.store.dispatch(productActions.getAccessoirsStarted());
       this.store.dispatch(productActions.getOffersStarted());
       this.store.select('product').subscribe((result) =>{
         this.fetchedProducts = result.offers
@@ -64,6 +66,6 @@ export class ProductsComponent implements OnInit {
     else {
       this.managing = false
     }
-    
+
   }
 }

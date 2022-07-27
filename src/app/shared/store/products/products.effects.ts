@@ -15,99 +15,101 @@ import { Offer } from "../../models/offers.model";
 export class ProductEffects {
 
 
-    constructor(private db: AngularFirestore,
-        private actions: Actions,
-        private store: Store<fromApp.State>
-      ) { }
-    
+  constructor(private db: AngularFirestore,
+    private actions: Actions,
+    private store: Store<fromApp.State>
+  ) { }
 
-    getIphones = createEffect(() => {
-        return this.actions.pipe(
-            ofType(productActions.getIPhonesStarted),
-            withLatestFrom(this.store.select('product')),
-            switchMap(([action,iphoneState]) => {
-                if (iphoneState.iphonesLoaded){
-                    return of(productActions.getIPhonesSuccess({payload:iphoneState.iphones}))
+
+  getIphones = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.getIPhonesStarted),
+      withLatestFrom(this.store.select('product')),
+      switchMap(([action, iphoneState]) => {
+        if (iphoneState.iphonesLoaded) {
+          return of(productActions.getIPhonesSuccess({ payload: iphoneState.iphones }))
+        }
+        else {
+          return this.db.collection('iPhones').snapshotChanges().pipe(
+            map((documents) => {
+              var iPhones = documents.map((document) => (
+                {
+                  id: document.payload.doc.id,
+                  ...(document.payload.doc.data() as Iphone)
                 }
-                else{
-                    return this.db.collection('iPhones').snapshotChanges().pipe(
-                        map((documents) => {
-                          var iPhones = documents.map((document) => (
-                            {
-                              id: document.payload.doc.id,
-                              ...(document.payload.doc.data() as Iphone)
-                            }
-                          ));
-                          return productActions.getIPhonesSuccess({ payload: iPhones })
-                        }),
-                        catchError(async (error) => {
-                          return productActions.getIPhonesFail({ payload: error })
-                        })
-                      )
-                    }
-                  })
-                )
-              })
-  
-
-    getAccessoirs = createEffect(() => {
-      return this.actions.pipe(
-          ofType(productActions.getAccessoirsStarted),
-          withLatestFrom(this.store.select('product')),
-          switchMap(([action,accessoirState]) => {
-              if (accessoirState.accessoirsLoaded){
-                  return of(productActions.getAccessoirsSuccess({payload:accessoirState.accessoirs}))
-              }
-              else{
-                  return this.db.collection('Accessoirs').snapshotChanges().pipe(
-                      map((documents) => {
-                        var Accessoirs = documents.map((document) => (
-                          {
-                            id: document.payload.doc.id,
-                            ...(document.payload.doc.data() as Accessoir)
-                          }
-                        ));
-                        return productActions.getAccessoirsSuccess({ payload: Accessoirs })
-                      }),
-                      catchError(async (error) => {
-                        return productActions.getAccessoirsFail({ payload: error })
-                      })
-                    )
-                  }
-                })
-              )
+              ));
+              return productActions.getIPhonesSuccess({ payload: iPhones })
+            }),
+            catchError(async (error) => {
+              return productActions.getIPhonesFail({ payload: error })
             })
+          )
+        }
+      })
+    )
+  })
 
 
-    getOffers = createEffect(() => {
-      return this.actions.pipe(
-          ofType(productActions.getOffersStarted),
-          withLatestFrom(this.store.select('product')),
-          switchMap(([action,offerState]) => {
-              if (offerState.offersLoaded){
-                  return of(productActions.getOffersSuccess({payload:offerState.offers}))
-              }
-              else{
-                  return this.db.collection('Offers').snapshotChanges().pipe(
-                      map((documents) => {
-                        var Offers = documents.map((document) => (
-                          {
-                            id: document.payload.doc.id,
-                            ...(document.payload.doc.data() as Offer)
-                          }
-                        ));
-                        return productActions.getOffersSuccess({ payload: Offers })
-                      }),
-                      catchError(async (error) => {
-                        return productActions.getOffersFail({ payload: error })
-                      })
-                    )
-                  }
-                })
-              )
+  getAccessoirs = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.getAccessoirsStarted),
+      withLatestFrom(this.store.select('product')),
+      switchMap(([action, accessoirState]) => {
+        if (accessoirState.accessoirsLoaded) {
+          return of(productActions.getAccessoirsSuccess({ payload: accessoirState.accessoirs }))
+        }
+        else {
+          return this.db.collection('Accessoirs').snapshotChanges().pipe(
+            map((documents) => {
+              var Accessoirs = documents.map((document) => (
+                {
+                  id: document.payload.doc.id,
+                  ...(document.payload.doc.data() as Accessoir)
+                }
+              ));
+              return productActions.getAccessoirsSuccess({ payload: Accessoirs })
+            }),
+            catchError(async (error) => {
+              return productActions.getAccessoirsFail({ payload: error })
             })
+          )
+        }
+      })
+    )
+  })
 
-   
+
+  getOffers = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.getOffersStarted),
+      withLatestFrom(this.store.select('product')),
+      switchMap(([action, productsState]) => {
+        if (productsState.offersLoaded) {
+          return of(productActions.getOffersSuccess({ payload: productsState.offers }))
+        }
+        else {
+          return this.db.collection('Offers').snapshotChanges().pipe(
+            map((documents) => {
+              var offers: Offer[] = [];
+              documents.forEach(document => {
+                var offer = document.payload.doc.data() as Offer;
+                offer.id = document.payload.doc.id;
+                offer.iphone = productsState.iphones?.find(x => x.id == offer.iphone?.id);
+                offer.accessoir = productsState.accessoirs?.find(x => x.id == offer.accessoir?.id);
+                offers.push(offer);
+              });
+              return productActions.getOffersSuccess({ payload: offers })
+            }),
+            catchError(async (error) => {
+              return productActions.getOffersFail({ payload: error })
+            })
+          )
+        }
+      })
+    )
+  })
+
+
 
 
 
