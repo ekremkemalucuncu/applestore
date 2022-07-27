@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core"
 import { FormControl, FormGroup, Validators } from "@angular/forms"
-import { ProductService } from "src/app/services/products.service"
-import { Iphone } from "../models/iphone.model"
+import { ProductService } from "src/app/core/services/products.service"
+import { Iphone } from "../../shared/models/iphone.model"
 import { take } from "rxjs/operators"
-import { Accessoir } from "../models/accessoirs.model"
-import { iPhones, Accessoirs } from "../shared/firestore.collections"
+import { Accessoir } from "../../shared/models/accessoirs.model"
+import { iPhones, Accessoirs } from "../../shared/firestore.collections"
 
 
 @Injectable({
@@ -41,7 +41,6 @@ export class FormCreation{
           form.get('screensize').setValue(formProduct['name'])
           form.get('sku').setValue(formProduct['sku'])
           form.get('description').setValue(formProduct['description'])
-          console.log(formProduct)
         }
         return form
       }
@@ -67,6 +66,9 @@ export class FormCreation{
     
     
       formCreationOffer(product:string,id:string,form:FormGroup){
+        let selectedaccessoir:Accessoir;
+        let selectediphone:Iphone;
+
         form = new FormGroup({
           name: new FormControl(null,[Validators.required]),
           iphone: new FormControl(null,[Validators.required]),
@@ -78,8 +80,8 @@ export class FormCreation{
           let formProduct=this.productservice.getProductByID(id,product);
           form.get('name').setValue(formProduct['name'])
           form.get('price').setValue(formProduct['price'])
-          form.get('iphone').setValue(formProduct['iphone']['name'])
-          form.get('accessoir').setValue(formProduct['accessoir']['name'])
+          selectedaccessoir = formProduct['accessoir']
+          selectediphone = formProduct['iphone']
         }
 
         let fetchedIphones:Iphone[];
@@ -103,6 +105,9 @@ export class FormCreation{
         return {
           form:form,
           fetchedIphones:fetchedIphones,
-          fetchedAccessoirs:fetchedAccessoirs}
+          fetchedAccessoirs:fetchedAccessoirs,
+          selectedaccessoir:selectedaccessoir,
+          selectediphone:selectediphone        
+        }
       }
 }

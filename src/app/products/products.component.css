@@ -34,6 +34,8 @@
     margin: auto;
   }
 
+  
+
   .example-spacer {
     flex: 1 1 auto;
   }
@@ -59,4 +61,12 @@ h3{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.rate{
+  background: red;
+  color: white;
+  right:20px;
+  position: absolute;
+  pointer-events: none;
 }

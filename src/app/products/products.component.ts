@@ -1,7 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Accessoir } from '../models/accessoirs.model';
-import { Iphone } from '../models/iphone.model';
-import { ProductService } from '../services/products.service'
+import { Component, Input, OnInit } from '@angular/core';
+import { Accessoir } from '../shared/models/accessoirs.model';
+import { Iphone } from '../shared/models/iphone.model';
+import { ProductService } from '../core/services/products.service'
 import { take } from 'rxjs/operators'
 import { iPhones,Accessoirs,Offers } from '../shared/firestore.collections';
 
@@ -27,12 +27,17 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.from.includes('iphone')){
+      this.productservice.fetchProducts('iPhones');
       this.product=iPhones
     }
     else if(this.from.includes('accessoir')){
+      this.productservice.fetchProducts('Accessoirs');
       this.product=Accessoirs
     }
     else if(this.from.includes('offer')){
+      this.productservice.fetchProducts('Offers');
+      this.productservice.fetchProducts('Accessoirs');
+      this.productservice.fetchProducts('iPhones');
       this.product=Offers
     }
 

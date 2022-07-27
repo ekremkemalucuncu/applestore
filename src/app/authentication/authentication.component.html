@@ -10,7 +10,7 @@
                     
                         <mat-card-content fxLayoutAlign="center center">
                             
-                            <form *ngIf="!(isLoading$ | async)" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px" [formGroup]="signInForm" (ngSubmit)="onLogin()">
+                            <form *ngIf="!isLoading" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px" [formGroup]="signInForm" (ngSubmit)="onLogin()">
 
                                     <mat-form-field appearance="outline" [style.width.px]=250>
                                         <mat-label>Enter your email</mat-label>
@@ -28,17 +28,17 @@
                                 
                             </form>
 
-                            <mat-spinner fxLayout="row" fxLayoutAlign="space-between center" *ngIf="(isLoading$ | async)"></mat-spinner>
+                            <mat-spinner fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isLoading"></mat-spinner>
                         </mat-card-content>
                             
                     </mat-tab>
                  
                  
-                    <mat-tab label="Sign Up"> 
+                    <mat-tab label="Sign Up" fxLayoutAlign="center center"> 
                         
                         <mat-card-content>
                             
-                            <form fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px" [formGroup]="signUpForm" (ngSubmit)="onRegister()">
+                            <form *ngIf="isLoading" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="20px" [formGroup]="signUpForm" (ngSubmit)="onRegister()">
 
                                     <mat-form-field appearance="outline" [style.width.px]=250>
                                         <mat-label>Enter your email</mat-label>
@@ -55,17 +55,13 @@
                                 
                                 <button type="submit" mat-button>Register</button>
                             </form>
+                            <mat-spinner fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isLoading"></mat-spinner>
                         </mat-card-content>
-
                     </mat-tab>
-
-
                 </mat-tab-group>
           </mat-card>
     </div>
-    <div *ngIf="(errorMessage$ | async)">
-        ekrem
-    </div>
+
     
 
 

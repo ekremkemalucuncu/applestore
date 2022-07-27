@@ -1,6 +1,6 @@
 import { Component, OnInit, Output ,EventEmitter} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/app/services/products.service';
+import { ProductService } from 'src/app/core/services/products.service';
 
 @Component({
   selector: 'app-productmanager',

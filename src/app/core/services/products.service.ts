@@ -2,11 +2,11 @@ import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { FormGroup } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
-import { Accessoir } from "../models/accessoirs.model";
-import { Iphone } from "../models/iphone.model";
-import { Offer } from "../models/offers.model"
-import { iPhones, Accessoirs, Offers} from "../shared/firestore.collections"
-
+import { Accessoir } from "../../shared/models/accessoirs.model";
+import { Iphone } from "../../shared/models/iphone.model";
+import { Offer } from "../../shared/models/offers.model"
+import { iPhones, Accessoirs, Offers} from "../../shared/firestore.collections"
+import { sliceNumber } from "../../shared/number.slice";
 
 
 
@@ -75,6 +75,7 @@ export class ProductService {
                                             for (let field in result.data()){
                                                 newOfferIphone[field]=result.data()[field]
                                             }
+                                            newOfferIphone.id=result.id
                                             newProduct[key]=newOfferIphone;
                                         }
                                     )
@@ -87,6 +88,7 @@ export class ProductService {
                                             for (let field in result.data()){
                                                 newOfferAccessoir[field]=result.data()[field]
                                             }
+                                            newOfferAccessoir.id=result.id
                                             newProduct[key]=newOfferAccessoir;
                                         }
                                     )
@@ -147,18 +149,26 @@ export class ProductService {
             )
         }
         else if(product==Offers){
-            console.log(form.value.iphone)
-            console.log(form.value.accessoir)
-            this.db.collection(product).add(
-                { 
-                    iphone:this.db.doc('/iPhones/'+form.value.iphone).ref,
-                    accessoir:this.db.doc('/Accessoirs/'+form.value.accessoir).ref,
-                    name:form.value.name,
-                    price:form.value.price
+            this.db.doc('/iPhones/'+form.value.iphone).get().forEach(
+                fieldiphone => {
+                   this.db.doc('/Accessoirs/'+form.value.accessoir).get().forEach(
+                    fieldaccessoir => {
+                        this.db.collection(product).add(
+                            { 
+                                iphone:this.db.doc('/iPhones/'+form.value.iphone).ref,
+                                accessoir:this.db.doc('/Accessoirs/'+form.value.accessoir).ref,
+                                name:form.value.name,
+                                price:form.value.price,
+                                oldprice:fieldiphone.data()['price']+fieldaccessoir.data()['price'],
+                                rate: sliceNumber(100-(form.value.price/(fieldiphone.data()['price']+fieldaccessoir.data()['price']))*100,5)
+                            }
+                        )
+                    }
+                   )
                 }
-            )
+                )
+            }
         }
-    }
 
     getProductByID(id:string,desiredproduct:string){
         if(desiredproduct==iPhones){
@@ -212,17 +222,28 @@ export class ProductService {
                 )
         }
         else if(desiredproduct==Offers) {
-            this.db.collection(desiredproduct).doc(id).update(
-                {
-                    name:form.value.name,
-                    iphone:this.db.doc('/iPhones/'+form.value.iphone).ref,
-                    accessoir:this.db.doc('/Accessoirs/'+form.value.accessoir).ref,
-                    price:form.value.price
+            this.db.doc('/iPhones/'+form.value.iphone).get().forEach(
+                fieldiphone => {
+                    this.db.doc('/Accessoirs/'+form.value.accessoir).get().forEach(
+                    fieldaccessoir => {
+                        this.db.collection(desiredproduct).doc(id).update(
+                            { 
+                                iphone:this.db.doc('/iPhones/'+form.value.iphone).ref,
+                                accessoir:this.db.doc('/Accessoirs/'+form.value.accessoir).ref,
+                                name:form.value.name,
+                                price:form.value.price,
+                                oldprice:fieldiphone.data()['price']+fieldaccessoir.data()['price'],
+                                rate: sliceNumber(100-(form.value.price/(fieldiphone.data()['price']+fieldaccessoir.data()['price']))*100,5)
+                            }
+                        )
+                    }
+                    )
                 }
                 )
         }
         }
 
+        
     deleteProduct(desiredproduct:string,id:string){
         this.db.collection(desiredproduct).doc(id).delete()
     }

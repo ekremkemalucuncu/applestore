@@ -22,8 +22,13 @@
             <mat-grid-tile [rowspan]="2" *ngIf="product==='Offers'">
                 <mat-form-field appearance="outline">
                     <mat-label>iPhone</mat-label>
-                    <mat-select formControlName="iphone" matInput required>
-                        <mat-option *ngFor="let iphone of fetchedIphones" value="iphone.id">
+                    <mat-select *ngIf="id" [(ngModel)]="selectediphone['id']" formControlName="iphone" matInput required>
+                        <mat-option *ngFor="let iphone of fetchedIphones" [value]="iphone.id">
+                            {{iphone.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-select *ngIf="!id" formControlName="iphone" matInput required>
+                        <mat-option *ngFor="let iphone of fetchedIphones" [value]="iphone.id">
                             {{iphone.name}}
                         </mat-option>
                     </mat-select>
@@ -32,8 +37,13 @@
             <mat-grid-tile [rowspan]="2" *ngIf="product==='Offers'">
                 <mat-form-field appearance="outline">
                     <mat-label>Accessoir</mat-label>
-                    <mat-select formControlName="accessoir" matInput required>
-                        <mat-option *ngFor="let accessoir of fetchedAccessoirs" value="accessoir.id">
+                    <mat-select *ngIf="id" [(ngModel)]="selectedaccessoir['id']" formControlName="accessoir" matInput required>
+                        <mat-option *ngFor="let accessoir of fetchedAccessoirs" [value]="accessoir.id">
+                            {{accessoir.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-select *ngIf="!id"  formControlName="accessoir" matInput required>
+                        <mat-option *ngFor="let accessoir of fetchedAccessoirs" [value]="accessoir.id">
                             {{accessoir.name}}
                         </mat-option>
                     </mat-select>
@@ -44,7 +54,7 @@
                     <mat-label>Price</mat-label>
                     <input formControlName="price" matInput required type="number">
                     <mat-icon matSuffix>attach_money</mat-icon>
-                    <!-- <mat-hint>Price without Offer is</mat-hint> -->
+                    <!-- <mat-hint *ngIf="product=='Offers'">Price without Offer is {{selectedaccessoir['id']}}</mat-hint> -->
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [rowspan]="2" *ngIf="product==='iPhones'|| product==='Accessoirs'">

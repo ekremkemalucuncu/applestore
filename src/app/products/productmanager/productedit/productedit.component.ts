@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Accessoir } from 'src/app/models/accessoirs.model';
-import { Iphone } from 'src/app/models/iphone.model';
-import { ProductService } from 'src/app/services/products.service';
-import { FormCreation } from '../../../services/formcreation.service';
+import { Accessoir } from 'src/app/shared/models/accessoirs.model';
+import { Iphone } from 'src/app/shared/models/iphone.model';
+import { ProductService } from 'src/app/core/services/products.service';
+import { FormCreation } from '../../../core/services/formcreation.service';
 import { iPhones,Accessoirs,Offers } from 'src/app/shared/firestore.collections';
 
 @Component({
@@ -21,8 +21,8 @@ export class ProducteditComponent implements OnInit {
   formProduct:any;
   fetchedIphones:any;
   fetchedAccessoirs:any;
-  accessoirprice:number;
-  iphoneprice:number;
+  selectedaccessoir:Accessoir;
+  selectediphone:Iphone;
 
   constructor(
     private productservice:ProductService,
@@ -45,7 +45,10 @@ export class ProducteditComponent implements OnInit {
       this.form=this.formcreation.formCreationOffer(this.product,this.id,this.form)['form']
       this.fetchedIphones=this.formcreation.formCreationOffer(this.product,this.id,this.form)['fetchedIphones']
       this.fetchedAccessoirs=this.formcreation.formCreationOffer(this.product,this.id,this.form)['fetchedAccessoirs']
+      this.selectedaccessoir=this.formcreation.formCreationOffer(this.product,this.id,this.form)['selectedaccessoir']
+      this.selectediphone=this.formcreation.formCreationOffer(this.product,this.id,this.form)['selectediphone']
     }
+
   }
 
   

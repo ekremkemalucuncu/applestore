@@ -3,9 +3,9 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import * as fromRoot from '../app.reducer'
-import * as AUTH from '../reducers/auth.actions'
-import * as LOADING from '../reducers/loading.actions'
+import * as fromRoot from '../../app.reducer'
+import * as AUTH from '../../shared/reducers/auth.actions'
+import * as LOADING from '../../shared/reducers/loading.actions'
 
 
 @Injectable({
@@ -22,7 +22,7 @@ export class AuthenticationService{
 
 
     registerUser(form:FormGroup){
-      this.store.dispatch(new LOADING.Loading())
+      this.store.dispatch(LOADING.Loading())
       this.auth.createUserWithEmailAndPassword(
         form.value.email,
         form.value.password
@@ -30,22 +30,22 @@ export class AuthenticationService{
         .then(
           () => {
             this.router.navigate(['']);
-            this.store.dispatch(new LOADING.NotLoading());
-            this.store.dispatch(new AUTH.Authenticated());
+            this.store.dispatch(LOADING.NotLoading());
+            this.store.dispatch(AUTH.Authenticated());
           })
           .catch(
             () => {
-            this.store.dispatch(new AUTH.FailedAuthentication())
-            this.store.dispatch(new LOADING.NotLoading());
+            this.store.dispatch(AUTH.FailedAuthentication())
+            this.store.dispatch(LOADING.NotLoading());
           })
           .finally(() =>{
-            this.store.dispatch(new LOADING.NotLoading());
+            this.store.dispatch(LOADING.NotLoading());
           })
 
     }
 
     signUser(form:FormGroup){
-      this.store.dispatch(new LOADING.Loading());
+      this.store.dispatch(LOADING.Loading());
       this.auth.signInWithEmailAndPassword(
         form.value.email,
         form.value.password
@@ -53,27 +53,27 @@ export class AuthenticationService{
         .then(
           () => {
             this.router.navigate(['']);
-            this.store.dispatch(new AUTH.Authenticated());
+            this.store.dispatch(AUTH.Authenticated());
           })
           .catch(
             () => {
-            this.store.dispatch(new AUTH.FailedAuthentication())
+            this.store.dispatch(AUTH.FailedAuthentication())
           })
           .finally(
             ()=> {
-            this.store.dispatch(new LOADING.NotLoading()); 
+            this.store.dispatch(LOADING.NotLoading()); 
           })
           }
 
    
 
     logout(){
-      this.store.dispatch(new LOADING.Loading());
+      this.store.dispatch(LOADING.Loading());
       this.auth.signOut()
       .then(
         () => {
-          this.store.dispatch(new AUTH.NotAuthenticated());
-          this.store.dispatch(new LOADING.NotLoading());
+          this.store.dispatch(AUTH.NotAuthenticated());
+          this.store.dispatch(LOADING.NotLoading());
         }
       )
     }

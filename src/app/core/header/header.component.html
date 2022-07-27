@@ -7,17 +7,17 @@
     <span> <button mat-button [routerLink]="['/product',{product:'iphone'}]">iPhone</button></span>
     <span> <button mat-button [routerLink]="['/product',{product:'accessoir'}]">Accessoir</button></span>
     <span> <button mat-button [routerLink]="['/product',{product:'offer'}]">Offers</button></span>
-    <span> <button *ngIf="(isAuth$ | async)" mat-button [routerLink]="['/productmanager',{product:'iphone'}]">iPhoneManager</button></span>
-    <span> <button *ngIf="(isAuth$ | async)" mat-button [routerLink]="['/productmanager',{product:'accessoir'}]">AccessoirManager</button></span>
-    <span> <button *ngIf="(isAuth$ | async)" mat-button [routerLink]="['/productmanager',{product:'offer'}]">OfferManager</button></span>
+    <span> <button *ngIf="isAuth " mat-button [routerLink]="['/productmanager',{product:'iphone'}]">iPhoneManager</button></span>
+    <span> <button *ngIf="isAuth " mat-button [routerLink]="['/productmanager',{product:'accessoir'}]">AccessoirManager</button></span>
+    <span> <button *ngIf="isAuth" mat-button [routerLink]="['/productmanager',{product:'offer'}]">OfferManager</button></span>
     <span class="example-spacer"></span>
     <button mat-icon-button >
         <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button *ngIf="!(isAuth$ | async)" mat-icon-button [routerLink]="['/authentication']">
+    <button *ngIf="!isAuth" mat-icon-button [routerLink]="['/authentication']">
         <mat-icon>login</mat-icon>
     </button>
-    <button *ngIf="(isAuth$ | async)" mat-icon-button [routerLink]="['/authentication']">
+    <button *ngIf="isAuth" mat-icon-button [routerLink]="['/authentication']">
         <mat-icon>logout</mat-icon>
     </button>
 </mat-toolbar>

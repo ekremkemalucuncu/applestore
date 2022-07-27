@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import * as AUTH from './reducers/auth.actions'
+import * as AUTH from './shared/reducers/auth.actions'
 import * as fromRoot from './app.reducer'
-import { ProductService } from './services/products.service';
 
 
 @Component({
@@ -20,7 +18,6 @@ export class AppComponent implements OnInit{
   constructor(
     private fAuth : AngularFireAuth,
     private store : Store<fromRoot.State>,
-    private productservice:ProductService
   ){
   }
   
@@ -28,13 +25,9 @@ export class AppComponent implements OnInit{
       this.fAuth.authState.subscribe(
         user => {
           if (user){
-            this.store.dispatch(new AUTH.Authenticated());
+            this.store.dispatch(AUTH.Authenticated());
           }
         }
       )
-      
-      this.productservice.fetchProducts('iPhones');
-      this.productservice.fetchProducts('Accessoirs');
-      this.productservice.fetchProducts('Offers');
-  }
+    }
 }

@@ -9,7 +9,7 @@ import { MaterialModule } from './material.module';
 import { ProductsComponent } from './products/products.component';
 import { ProductmanagerComponent } from './products/productmanager/productmanager.component';
 import { ProductComponent } from './products/product/product.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './core/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireModule } from '@angular/fire/compat'
@@ -20,8 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { reducers } from './app.reducer';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
-import { TextSlice } from './pipes/pipe';
-import { FormCreation } from './services/formcreation.service';
+import { TextSlice } from './shared/pipes/pipe';
+import { FormCreation } from './core/services/formcreation.service';
 
 
 @NgModule({

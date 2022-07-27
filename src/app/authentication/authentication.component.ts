@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../core/services/authentication.service';
 import * as fromRoot from '../app.reducer'
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-
+import { Observable, Subscription } from 'rxjs';
+import * as fromAuth from '../shared/reducers/auth.reducer'
 
 
 @Component({
@@ -17,12 +16,13 @@ export class AuthenticationComponent implements OnInit {
 
   signInForm:FormGroup;
   signUpForm:FormGroup;
-  isLoading$: Observable<boolean>;
-  isAuth$:Observable<boolean>;
-  errorMessage$: Observable<boolean>;
+  isLoading: boolean;
+  isAuth:boolean;
   Message:Promise<any>
   hidesignin = true;
   hidesignup=true;
+  storeSubAuth:Subscription;
+  storeSubLoading:Subscription;
 
   
   constructor(
@@ -41,11 +41,16 @@ export class AuthenticationComponent implements OnInit {
       password:new FormControl(null,[Validators.required])
     })
 
-    this.isLoading$=this.store.select(fromRoot.getIsLoading);
-    this.isAuth$=this.store.select(fromRoot.getIsAuthenticated);
-    this.errorMessage$=this.store.select(fromRoot.getIsAuthenticated);
+    this.storeSubAuth= this.store.select('auth').subscribe(
+      authState => { this.isAuth = authState.isAuth}
+    )
 
-    if (this.isAuth$){
+    this.storeSubLoading = this.store.select('loading').subscribe(
+      loadingState => {this.isLoading=loadingState.isLoaded}
+    )
+
+
+    if (this.isAuth){
       this.onLogout()
     }
   }

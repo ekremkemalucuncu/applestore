@@ -8,6 +8,8 @@ export class Offer{
         public price?:number,
         public id?:string,
         public iphone?:Iphone,
-        public accessoir?:Accessoir
+        public accessoir?:Accessoir,
+        public oldprice?:number,
+        public rate?:number
     ){}
 }
