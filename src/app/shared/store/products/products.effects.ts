@@ -1,151 +1,130 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore, DocumentChangeAction } from "@angular/fire/compat/firestore";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { Store } from "@ngrx/store";
-import { catchError, map, of, switchMap, withLatestFrom } from "rxjs";
+import { catchError, from, map, of, switchMap, withLatestFrom } from "rxjs";
 import * as fromApp from "src/app/app.reducer";
 import * as productActions from "./products.actions";
 import { Iphone } from '../../models/iphone.model';
 import { Accessoir } from "../../models/accessoirs.model";
 import { Offer } from "../../models/offers.model";
-
-
+import { Router } from "@angular/router";
 
 @Injectable()
 export class ProductEffects {
-
-
   constructor(private db: AngularFirestore,
-      private actions: Actions,
-      private store: Store<fromApp.State>
-    ) { }
-  
-    getIphones = createEffect(() => {
-      return this.actions.pipe(
-        ofType(productActions.getIPhonesStarted),
-        withLatestFrom(this.store.select('product')),
-        switchMap(([action, iphoneState]) => {
-          if (iphoneState.iphonesLoaded) {
-            return of(productActions.getIPhonesSuccess({ payload: iphoneState.iphones }))
+    private actions: Actions,
+    private store: Store<fromApp.State>,
+    private router: Router
+  ) { }
+
+  getIphones = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.getIPhonesStarted),
+      withLatestFrom(this.store.select('product')),
+      switchMap(([action, iphoneState]) => {
+        if (iphoneState.iphonesLoaded) {
+          return of(productActions.getIPhonesSuccess({ payload: iphoneState.iphones }))
+        }
+        else {
+          return this.db.collection('iPhones').snapshotChanges().pipe(
+            map((documents) => {
+              var iPhones = documents.map((document) => (
+                {
+                  id: document.payload.doc.id,
+                  ...(document.payload.doc.data() as Iphone)
+                }
+              ));
+              return productActions.getIPhonesSuccess({ payload: iPhones })
+            }),
+            catchError(async (error) => {
+              return productActions.getIPhonesFail({ payload: error })
+            })
+          )
+        }
+      })
+    )
+  })
+
+  updateIphone = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.updateIphonesStarted),
+      switchMap((action) => {
+        return from(this.db.collection('iPhones').doc(action.id).update(
+          {
+            name: action.form.value.name,
+            price: action.form.value.price,
+            imagesource: action.form.value.imagesource,
+            color: action.form.value.color,
+            screensize: action.form.value.screensize,
+            description: action.form.value.description,
+            sku: action.form.value.sku,
+            model: action.form.value.model
           }
-          else {
-            return this.db.collection('iPhones').snapshotChanges().pipe(
-              map((documents) => {
-                var iPhones = documents.map((document) => (
-                  {
-                    id: document.payload.doc.id,
-                    ...(document.payload.doc.data() as Iphone)
-                  }
-                ));
-                return productActions.getIPhonesSuccess({ payload: iPhones })
-              }),
-              catchError(async (error) => {
-                return productActions.getIPhonesFail({ payload: error })
-              })
-            )
-          }
-        })
-      )
-    })
-  
- 
-
-  // getIphoneEditStarted = createEffect(() => {
-  //   return this.actions.pipe(
-  //     ofType(productActions.getIPhonesEditStarted),
-  //     withLatestFrom(this.store.select('product')),
-  //     switchMap(([actions,offerstate]) =>{
-  //       let form =this.db.collection(iPhones).doc(actions.payload).valueChanges().subscribe(
-  //         fetchedproduct => {
-  //           return new FormGroup({
-  //             name: new FormControl(fetchedproduct['name'],[Validators.required]),
-  //             model: new FormControl(fetchedproduct['model'],[Validators.required]),
-  //             price: new FormControl(fetchedproduct['price'],[Validators.required]),
-  //             imagesource: new FormControl(fetchedproduct['imagesource'],[Validators.required]),
-  //             color: new FormControl(fetchedproduct['color'],[Validators.required]),
-  //             screensize: new FormControl(fetchedproduct['screensize'],[Validators.required]),
-  //             sku: new FormControl(fetchedproduct['sku'],[Validators.required]),
-  //             description: new FormControl(fetchedproduct['ndescriptioname'],[Validators.required]),
-  //           })
-  //         }
-  //       )
-  //       return of(productActions.getIPhonesStarted())
-  //     })
-  //   )
-  // })
-
-
-  // getIphonesUpdate =createEffect(() => {
-  //   return this.actions.pipe(
-  //     ofType(productActions.getIPhonesUpdateStarted),
-  //     withLatestFrom(this.store.select('product')),
-  //     switchMap(([action,offerState])=>{
-  //       this.db.collection(iPhones).doc(action.id).update(
-  //         {
-  //             name:action.payload.value.name,
-  //             price:action.payload.value.price,
-  //             imagesource:action.payload.value.imagesource,
-  //             color:action.payload.value.color,
-  //             screensize:action.payload.value.screensize,
-  //             description:action.payload.value.description,
-  //             sku:action.payload.value.sku,
-  //             model:action.payload.value.model
-  //         }
-  //         )
-  //       return of(productActions.getIPhonesStarted())
-  //     })
-  //   )
-  // })
+        )).pipe(
+          map(() => {
+            this.router.navigate(['/productmanager'], { queryParams: { product: 'iphone' } })
+            return productActions.updateIphoneSuccess();
+          }),
+          catchError(async (error) => {
+            return productActions.updateIphoneFail(error);
+          })
+        )
+      })
+    )
+  })
 
   getAccessoirs = createEffect(() => {
     return this.actions.pipe(
-        ofType(productActions.getAccessoirsStarted),
-        withLatestFrom(this.store.select('product')),
-        switchMap(([action,accessoirState]) => {
-            if (accessoirState.accessoirsLoaded){
-                return of(productActions.getAccessoirsSuccess({payload:accessoirState.accessoirs}))
-            }
-            else{
-                return this.db.collection('Accessoirs').snapshotChanges().pipe(
-                    map((documents) => {
-                      var Accessoirs = documents.map((document) => (
-                        {
-                          id: document.payload.doc.id,
-                          ...(document.payload.doc.data() as Accessoir)
-                        }
-                      ));
-                      return productActions.getAccessoirsSuccess({ payload: Accessoirs })
-                    }),
-                    catchError(async (error) => {
-                      return productActions.getAccessoirsFail({ payload: error })
-                    })
-                  )
+      ofType(productActions.getAccessoirsStarted),
+      withLatestFrom(this.store.select('product')),
+      switchMap(([action, accessoirState]) => {
+        if (accessoirState.accessoirsLoaded) {
+          return of(productActions.getAccessoirsSuccess({ payload: accessoirState.accessoirs }))
+        }
+        else {
+          return this.db.collection('Accessoirs').snapshotChanges().pipe(
+            map((documents) => {
+              var Accessoirs = documents.map((document) => (
+                {
+                  id: document.payload.doc.id,
+                  ...(document.payload.doc.data() as Accessoir)
                 }
-              })
-            )
+              ));
+              return productActions.getAccessoirsSuccess({ payload: Accessoirs })
+            }),
+            catchError(async (error) => {
+              return productActions.getAccessoirsFail({ payload: error })
+            })
+          )
+        }
+      })
+    )
+  })
+
+  updateAccessoir = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.updateAccessoirStarted),
+      switchMap((action) => {
+        return from(this.db.collection('Accessoirs').doc(action.id).update(
+          {
+            name: action.form.value.name,
+            price: action.form.value.price,
+            imagesource: action.form.value.imagesource,
+            description: action.form.value.description,
+          }
+        )).pipe(
+          map(() => {
+            this.router.navigate(['/productmanager'], { queryParams: { product: 'iphone' } })
+            return productActions.updateIphoneSuccess();
+          }),
+          catchError(async (error) => {
+            return productActions.updateIphoneFail(error);
           })
-
-  // getAccessoirsUpdate =createEffect(() => {
-  //   return this.actions.pipe(
-  //     ofType(productActions.getAccessoirsStarted),
-  //     withLatestFrom(this.store.select('product')),
-  //     switchMap(([action,offerState])=>{
-  //       return this.db.collection('Accessoirs').snapshotChanges().pipe(
-  //         map((documents) =>{
-  //           var Accessoirs = documents.map((document) => ({
-  //             id:document.payload.doc.id,
-  //             ...(document.payload.doc.data() as Accessoir)
-  //           }))
-  //           return productActions.getAccessoirsSuccess({payload:Accessoirs})
-  //         }),
-  //         catchError(async (error) => {
-  //           return productActions.getAccessoirsFail({ payload: error })
-  //         })
-  //       )
-  //     })
-  //   )
-  // })
-
+        )
+      })
+    )
+  })
 
   getOffers = createEffect(() => {
     return this.actions.pipe(
