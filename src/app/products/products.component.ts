@@ -16,10 +16,10 @@ import { Offer } from '../shared/models/offers.model';
 export class ProductsComponent implements OnInit {
 
   @Input() from:string;
+  @Input() fetchedProducts:Iphone[] | Accessoir[] | Offer[];
   product:string;
   managing:boolean;
   loading:boolean
-  fetchedProducts:Iphone[] | Accessoir[] | Offer[]
 
 
   constructor(
