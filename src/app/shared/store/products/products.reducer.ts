@@ -1,3 +1,4 @@
+import { FormGroup } from "@angular/forms";
 import { Action, createReducer, on } from "@ngrx/store"
 import { Accessoir } from "../../models/accessoirs.model";
 import { Iphone } from "../../models/iphone.model";
@@ -10,6 +11,10 @@ export interface State {
     iphonesLoaded: boolean,
     iphonesLoading: boolean,
     getIPhonesError: string,
+    iphoneForm:FormGroup,
+    iphoneFormEdit:FormGroup,
+    iphoneid:string,
+    iphonesupdating:boolean,
     accessoirs: Accessoir[],
     accessoirsLoaded: boolean,
     accessoirsLoading: boolean,
@@ -26,6 +31,10 @@ export interface State {
     iphonesLoaded: false,
     iphonesLoading: false,
     getIPhonesError: null,
+    iphoneForm:null,
+    iphoneFormEdit:null,
+    iphoneid:null,
+    iphonesupdating:false,
     accessoirs: [],
     accessoirsLoaded: false,
     accessoirsLoading: false,
@@ -56,6 +65,45 @@ export interface State {
         iphones:[],
         iphonesLoaded:false,
         getIPhonesError:action.payload
+    })),
+
+    on(productsActions.getIPhonesEditStarted,(state,action) => ({
+        ...state,
+        iphoneid:action.payload
+
+    })),
+    on(productsActions.getIPhonesEditSuccess,(state,action) => ({
+        ...state,
+        iphoneFormEdit:action.payload
+
+    })),
+
+    on(productsActions.getIPhonesUpdateStarted,(state,action) => ({
+        ...state,
+        iphoneForm:action.payload,
+        iphoneid:action.id,
+        iphonesupdating:true
+    })),
+    on(productsActions.getIPhonesUpdateStarted,(state,action) => ({
+        ...state,
+        iphoneForm:action.payload,
+        iphoneid:action.id,
+        iphonesupdating:true
+    })),
+    on (productsActions.getIPhonesUpdateSuccess,(state,action) => ({
+        ...state,
+        iphonesLoaded:false,
+        iphones:action.payload,
+        getIPhonesError:null,
+        iphonesupdating:false
+    })),
+    on(productsActions.getIPhonesUpdateFail,(state,action) =>({
+        ...state,
+        iphonesLoading:false,
+        iphones:[],
+        getIPhonesError:action.payload,
+        iphonesupdating:false
+
     })),
 
     on(productsActions.getAccessoirsStarted,(state,action) => ({

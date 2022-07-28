@@ -6,6 +6,10 @@ import { Iphone } from 'src/app/shared/models/iphone.model';
 import { ProductService } from 'src/app/core/services/products.service';
 import { FormCreation } from '../../../core/services/formcreation.service';
 import { iPhones,Accessoirs,Offers } from 'src/app/shared/firestore.collections';
+import * as productActions from '../../../shared/store/products/products.actions'
+import * as fromRoot from '../../../app.reducer'
+import { Store } from '@ngrx/store';
+
 
 @Component({
   selector: 'app-productedit',
@@ -28,15 +32,18 @@ export class ProducteditComponent implements OnInit {
     private productservice:ProductService,
     private route:ActivatedRoute,
     private router:Router,
-    private formcreation:FormCreation
-  ) { }
+    private formcreation:FormCreation,
+    private store:Store<fromRoot.State>
+    ) { }
 
   ngOnInit(): void {
     this.product=this.route.snapshot.params['product']
     this.id=this.route.snapshot.params['id']
 
     if(this.product==iPhones){
-      this.form=this.formcreation.formCreationIphone(this.product,this.id,this.form)
+      // this.form=this.formcreation.formCreationIphone(this.product,this.id,this.form)
+      this.store.dispatch(productActions.getIPhonesUpdateStarted({payload:this.form,id:this.id}));
+
     }
     else if(this.product==Accessoirs){
       this.form=this.formcreation.formCreationAccessoir(this.product,this.id,this.form)
@@ -64,13 +71,16 @@ export class ProducteditComponent implements OnInit {
       this.productservice.createProducts(this.product,this.form);
       this.router.navigate(['/productmanager',{product:'offer'}])
     }
-    this.productservice.fetchProducts(this.product);
   }
 
 
   onUpdate(){
     if (this.product==iPhones){
-      this.productservice.updateProducts(this.product,this.form,this.id);
+      // this.productservice.updateProducts(this.product,this.form,this.id);
+      this.store.dispatch(productActions.getIPhonesUpdateStarted({payload:this.form,id:this.id}));
+      this.store.select('product').subscribe((result) =>{
+        console.log({result:result})
+      })
       this.router.navigate(['/productmanager',{product:'iphone'}]);
     }
     else if(this.product==Accessoirs){
@@ -81,7 +91,6 @@ export class ProducteditComponent implements OnInit {
       this.productservice.updateProducts(this.product,this.form,this.id);
       this.router.navigate(['/productmanager',{product:'offer'}])
     }
-    this.productservice.fetchProducts(this.product);
   }
 
 
@@ -96,6 +105,5 @@ export class ProducteditComponent implements OnInit {
     else if(this.product==Offers){
       this.router.navigate(['/productmanager',{product:'offer'}])
     }
-    this.productservice.fetchProducts(this.product);
   }
 }

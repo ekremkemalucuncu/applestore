@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../core/services/authentication.service';
 import * as fromRoot from '../app.reducer'
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
@@ -23,7 +22,6 @@ export class AuthenticationComponent implements OnInit {
   authState: Observable<FROMAUTH.State>;
 
   constructor(
-    private authService: AuthenticationService,
     private store: Store<fromRoot.State>
   ) { }
 
@@ -63,6 +61,5 @@ export class AuthenticationComponent implements OnInit {
   onLogout() {
     console.log("logout");
     this.store.dispatch(AUTH.LogOut());
-    // this.authService.logout()
   }
 }

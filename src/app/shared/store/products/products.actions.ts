@@ -1,5 +1,5 @@
+import { FormGroup } from "@angular/forms";
 import { createAction,props } from "@ngrx/store";
-import { BehaviorSubject } from "rxjs";
 import { Accessoir } from "../../models/accessoirs.model";
 import { Iphone } from "../../models/iphone.model";
 import { Offer } from "../../models/offers.model";
@@ -15,6 +15,33 @@ export const getIPhonesSuccess =createAction(
 
 export const getIPhonesFail =createAction(
     "GET_IPHONES_FAIL",
+    props<{ payload: string }>()
+)
+
+export const getIPhonesEditStarted=createAction(
+    "GET_IPHONES_EDIT_STARTED",
+    props<{ payload:string }>()
+)
+
+export const getIPhonesEditSuccess=createAction(
+    "GET_IPHONES_EDIT_SUCCESS",
+    props<{ payload:FormGroup }>()
+)
+
+export const getIPhonesUpdateStarted=createAction(
+    "GET_IPHONES_UPDATE_STARTED",
+    props<{ payload : FormGroup,
+            id:string
+    }>()
+)
+
+export const getIPhonesUpdateSuccess =createAction(
+    "GET_IPHONES_UPDATE_SUCCESS",
+    props<{ payload: Iphone[] }>()
+)
+
+export const getIPhonesUpdateFail =createAction(
+    "GET_IPHONES_UPDATE_FAIL",
     props<{ payload: string }>()
 )
 
