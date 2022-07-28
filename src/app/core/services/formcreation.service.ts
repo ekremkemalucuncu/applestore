@@ -5,6 +5,7 @@ import { Iphone } from "../../shared/models/iphone.model"
 import { take } from "rxjs/operators"
 import { Accessoir } from "../../shared/models/accessoirs.model"
 import { iPhones, Accessoirs } from "../../shared/firestore.collections"
+import { AngularFirestore } from "@angular/fire/compat/firestore"
 
 
 @Injectable({
@@ -14,7 +15,8 @@ export class FormCreation{
 
 
     constructor(
-        private productservice:ProductService
+        private productservice:ProductService,
+        private db:AngularFirestore
     ){
         
     }
@@ -32,15 +34,20 @@ export class FormCreation{
         })
     
         if(id){
-          let formProduct=this.productservice.getProductByID(id,product)
-          form.get('name').setValue(formProduct['name'])
-          form.get('model').setValue(formProduct['model'])
-          form.get('price').setValue(formProduct['price'])
-          form.get('imagesource').setValue(formProduct['imagesource'])
-          form.get('color').setValue(formProduct['color'])
-          form.get('screensize').setValue(formProduct['name'])
-          form.get('sku').setValue(formProduct['sku'])
-          form.get('description').setValue(formProduct['description'])
+          let formProduct
+          this.db.collection('iPhones').doc(id).valueChanges().subscribe(
+            fetchedproduct => {
+              formProduct=fetchedproduct
+              form.get('name').setValue(formProduct['name'])
+              form.get('model').setValue(formProduct['model'])
+              form.get('price').setValue(formProduct['price'])
+              form.get('imagesource').setValue(formProduct['imagesource'])
+              form.get('color').setValue(formProduct['color'])
+              form.get('screensize').setValue(formProduct['name'])
+              form.get('sku').setValue(formProduct['sku'])
+              form.get('description').setValue(formProduct['description'])
+            }
+          )
         }
         return form
       }
@@ -55,11 +62,17 @@ export class FormCreation{
         })
     
         if(id){
-          let formProduct=this.productservice.getProductByID(id,product);
-          form.get('name').setValue(formProduct['name'])
-          form.get('price').setValue(formProduct['price'])
-          form.get('imagesource').setValue(formProduct['imagesource'])
-          form.get('description').setValue(formProduct['description'])
+          let formProduct;
+          this.db.collection('Accessoirs').doc(id).valueChanges().subscribe(
+            fetchedproduct => {
+              formProduct=fetchedproduct
+              form.get('name').setValue(formProduct['name'])
+              form.get('price').setValue(formProduct['price'])
+              form.get('imagesource').setValue(formProduct['imagesource'])
+              form.get('description').setValue(formProduct['description'])
+            }
+          )
+          
         }
         return form
       }

@@ -15,13 +15,11 @@ export class AuthenticationEffects {
       switchMap((action: any) => {
         return from(this.ngFireAuth.signInWithEmailAndPassword(action.email, action.password)).pipe(
           switchMap((result) => {
-            console.log({ result: result });
             this.router.navigate(['']);
             return of(AUTH.Authenticated())
           }),
           catchError(async (error) => {
-            console.log({ error: error });
-            return AUTH.LoginFails({ error: error });
+            return AUTH.LoginFails({ error: error.message });
           }))
       }));
   })
@@ -39,7 +37,7 @@ export class AuthenticationEffects {
           }),
           catchError(async (error) => {
             console.log({ error: error });
-            return AUTH.SignupFails({ error: error });
+            return AUTH.SignupFails({ error: error.message });
           }))
       }));
   })

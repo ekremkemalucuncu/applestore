@@ -27,84 +27,84 @@ export class ProductService {
     ){}
 
 
-    fetchProducts(desiredproduct:string){
-        if (desiredproduct==iPhones){
-            this.iPhoneList=[]
-            this.iPhoneBehavior.next(this.iPhoneList)
-        }
-        else if (desiredproduct==Accessoirs){
-            this.AccessoirList=[]
-            this.AccessoirBehavior.next(this.AccessoirList)
-        }
-        else if(desiredproduct ==Offers){
-            this.OffersList=[]
-            this.OfferBehaviour.next(this.OffersList)
-        }
-        this.db.collection(desiredproduct).get()
-        .forEach(
-            (products) => {
-                products.forEach(
-                    (product) =>{
-                        let oneproduct:any=product.data();
-                        if (desiredproduct==iPhones)
-                        {
-                            let newProduct = new Iphone
-                            for (let key in oneproduct){
-                                newProduct[key]=oneproduct[key]
-                            }
-                            newProduct.id=product.id
-                            this.iPhoneList.push(newProduct)
-                        }
-                        else if(desiredproduct==Accessoirs)
-                        {
-                            let newProduct = new Accessoir
-                            for (let key in oneproduct){
-                                newProduct[key]=oneproduct[key]
-                            }
-                            newProduct.id=product.id
-                            this.AccessoirList.push(newProduct)
-                        }
-                        else if (desiredproduct==Offers){
-                            let newProduct = new Offer
-                            for (let key in oneproduct){
-                                if (key=='iphone'){
-                                    oneproduct[key].get()
-                                    .then(
-                                        (result) =>{
-                                            let newOfferIphone = new Iphone
-                                            for (let field in result.data()){
-                                                newOfferIphone[field]=result.data()[field]
-                                            }
-                                            newOfferIphone.id=result.id
-                                            newProduct[key]=newOfferIphone;
-                                        }
-                                    )
-                                }
-                                else if (key=='accessoir'){
-                                    oneproduct[key].get()
-                                    .then(
-                                        (result) =>{
-                                            let newOfferAccessoir = new Accessoir
-                                            for (let field in result.data()){
-                                                newOfferAccessoir[field]=result.data()[field]
-                                            }
-                                            newOfferAccessoir.id=result.id
-                                            newProduct[key]=newOfferAccessoir;
-                                        }
-                                    )
-                                }
-                                else{
-                                    newProduct[key]=oneproduct[key]
-                                }
-                            }
-                            newProduct.id=product.id
-                            this.OffersList.push(newProduct)
-                        }                       
-                    }
-                )
-            }
-        )
-    }
+    // fetchProducts(desiredproduct:string){
+    //     if (desiredproduct==iPhones){
+    //         this.iPhoneList=[]
+    //         this.iPhoneBehavior.next(this.iPhoneList)
+    //     }
+    //     else if (desiredproduct==Accessoirs){
+    //         this.AccessoirList=[]
+    //         this.AccessoirBehavior.next(this.AccessoirList)
+    //     }
+    //     else if(desiredproduct ==Offers){
+    //         this.OffersList=[]
+    //         this.OfferBehaviour.next(this.OffersList)
+    //     }
+    //     this.db.collection(desiredproduct).get()
+    //     .forEach(
+    //         (products) => {
+    //             products.forEach(
+    //                 (product) =>{
+    //                     let oneproduct:any=product.data();
+    //                     if (desiredproduct==iPhones)
+    //                     {
+    //                         let newProduct = new Iphone
+    //                         for (let key in oneproduct){
+    //                             newProduct[key]=oneproduct[key]
+    //                         }
+    //                         newProduct.id=product.id
+    //                         this.iPhoneList.push(newProduct)
+    //                     }
+    //                     else if(desiredproduct==Accessoirs)
+    //                     {
+    //                         let newProduct = new Accessoir
+    //                         for (let key in oneproduct){
+    //                             newProduct[key]=oneproduct[key]
+    //                         }
+    //                         newProduct.id=product.id
+    //                         this.AccessoirList.push(newProduct)
+    //                     }
+    //                     else if (desiredproduct==Offers){
+    //                         let newProduct = new Offer
+    //                         for (let key in oneproduct){
+    //                             if (key=='iphone'){
+    //                                 oneproduct[key].get()
+    //                                 .then(
+    //                                     (result) =>{
+    //                                         let newOfferIphone = new Iphone
+    //                                         for (let field in result.data()){
+    //                                             newOfferIphone[field]=result.data()[field]
+    //                                         }
+    //                                         newOfferIphone.id=result.id
+    //                                         newProduct[key]=newOfferIphone;
+    //                                     }
+    //                                 )
+    //                             }
+    //                             else if (key=='accessoir'){
+    //                                 oneproduct[key].get()
+    //                                 .then(
+    //                                     (result) =>{
+    //                                         let newOfferAccessoir = new Accessoir
+    //                                         for (let field in result.data()){
+    //                                             newOfferAccessoir[field]=result.data()[field]
+    //                                         }
+    //                                         newOfferAccessoir.id=result.id
+    //                                         newProduct[key]=newOfferAccessoir;
+    //                                     }
+    //                                 )
+    //                             }
+    //                             else{
+    //                                 newProduct[key]=oneproduct[key]
+    //                             }
+    //                         }
+    //                         newProduct.id=product.id
+    //                         this.OffersList.push(newProduct)
+    //                     }                       
+    //                 }
+    //             )
+    //         }
+    //     )
+    // }
                     
     getProduct(product:string){
         if (product==iPhones){
@@ -138,6 +138,7 @@ export class ProductService {
             sku:form.value.sku,
             model:form.value.model
             })
+            
         }
         else if(product==Accessoirs){
             this.db.collection(product).add(

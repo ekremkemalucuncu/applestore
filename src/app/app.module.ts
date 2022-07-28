@@ -19,10 +19,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { reducers } from './app.reducer';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { ProducteditComponent } from './products/productmanager/productedit/productedit.component';
+import { TextSlice } from './shared/pipes/textslicer.pipe';
 import { EffectsModule } from '@ngrx/effects';
-import { PhonesEffects } from './shared/reducers/phones/phones.effects';
-import { AuthenticationEffects } from './shared/reducers/auth.effects';
+import { ProductEffects } from './shared/store/products/products.effects';
+import { AuthenticationEffects } from './shared/store/auth/auth.effects';
 import { SharedModule } from './shared/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +49,7 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([PhonesEffects, AuthenticationEffects])
+    EffectsModule.forRoot([ProductEffects,AuthenticationEffects]),
   ],
   providers: [
     {
