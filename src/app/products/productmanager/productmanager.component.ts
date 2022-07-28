@@ -1,4 +1,4 @@
-import { Component, OnInit, Output ,EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -8,18 +8,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProductmanagerComponent implements OnInit {
 
-  from:string;
+  from: string;
 
   constructor(
-    private route:ActivatedRoute,
-    private router:Router,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(): void {
-    this.from=this.route.snapshot.params['product']+'manager';
-
+    this.from = this.route.snapshot.queryParams['product'] + 'manager';
   }
-
 }
