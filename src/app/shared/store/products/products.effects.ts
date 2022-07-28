@@ -8,8 +8,6 @@ import * as productActions from "./products.actions";
 import { Iphone } from '../../models/iphone.model';
 import { Accessoir } from "../../models/accessoirs.model";
 import { Offer } from "../../models/offers.model";
-import { iPhones } from "../../firestore.collections";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 
 
@@ -22,34 +20,35 @@ export class ProductEffects {
       private store: Store<fromApp.State>
     ) { }
   
-
-  getIphones = createEffect(() => {
+    getIphones = createEffect(() => {
       return this.actions.pipe(
-          ofType(productActions.getIPhonesStarted),
-          withLatestFrom(this.store.select('product')),
-          switchMap(([action,iphoneState]) => {
-              if (iphoneState.iphonesLoaded){
-                  return of(productActions.getIPhonesSuccess({payload:iphoneState.iphones}))
-              }
-              else{
-                  return this.db.collection('iPhones').snapshotChanges().pipe(
-                      map((documents) => {
-                        var iPhones = documents.map((document) => (
-                          {
-                            id: document.payload.doc.id,
-                            ...(document.payload.doc.data() as Iphone)
-                          }
-                        ));
-                        return productActions.getIPhonesSuccess({ payload: iPhones })
-                      }),
-                      catchError(async (error) => {
-                        return productActions.getIPhonesFail({ payload: error })
-                      })
-                    )
+        ofType(productActions.getIPhonesStarted),
+        withLatestFrom(this.store.select('product')),
+        switchMap(([action, iphoneState]) => {
+          if (iphoneState.iphonesLoaded) {
+            return of(productActions.getIPhonesSuccess({ payload: iphoneState.iphones }))
+          }
+          else {
+            return this.db.collection('iPhones').snapshotChanges().pipe(
+              map((documents) => {
+                var iPhones = documents.map((document) => (
+                  {
+                    id: document.payload.doc.id,
+                    ...(document.payload.doc.data() as Iphone)
                   }
-                })
-              )
-            })
+                ));
+                return productActions.getIPhonesSuccess({ payload: iPhones })
+              }),
+              catchError(async (error) => {
+                return productActions.getIPhonesFail({ payload: error })
+              })
+            )
+          }
+        })
+      )
+    })
+  
+ 
 
   // getIphoneEditStarted = createEffect(() => {
   //   return this.actions.pipe(
@@ -76,27 +75,27 @@ export class ProductEffects {
   // })
 
 
-  getIphonesUpdate =createEffect(() => {
-    return this.actions.pipe(
-      ofType(productActions.getIPhonesUpdateStarted),
-      withLatestFrom(this.store.select('product')),
-      switchMap(([action,offerState])=>{
-        this.db.collection(iPhones).doc(action.id).update(
-          {
-              name:action.payload.value.name,
-              price:action.payload.value.price,
-              imagesource:action.payload.value.imagesource,
-              color:action.payload.value.color,
-              screensize:action.payload.value.screensize,
-              description:action.payload.value.description,
-              sku:action.payload.value.sku,
-              model:action.payload.value.model
-          }
-          )
-        return of(productActions.getIPhonesStarted())
-      })
-    )
-  })
+  // getIphonesUpdate =createEffect(() => {
+  //   return this.actions.pipe(
+  //     ofType(productActions.getIPhonesUpdateStarted),
+  //     withLatestFrom(this.store.select('product')),
+  //     switchMap(([action,offerState])=>{
+  //       this.db.collection(iPhones).doc(action.id).update(
+  //         {
+  //             name:action.payload.value.name,
+  //             price:action.payload.value.price,
+  //             imagesource:action.payload.value.imagesource,
+  //             color:action.payload.value.color,
+  //             screensize:action.payload.value.screensize,
+  //             description:action.payload.value.description,
+  //             sku:action.payload.value.sku,
+  //             model:action.payload.value.model
+  //         }
+  //         )
+  //       return of(productActions.getIPhonesStarted())
+  //     })
+  //   )
+  // })
 
   getAccessoirs = createEffect(() => {
     return this.actions.pipe(
@@ -199,19 +198,6 @@ export class ProductEffects {
   //     })
   //   )
   // })
-
-   
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
