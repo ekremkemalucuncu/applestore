@@ -39,10 +39,6 @@ export class AuthenticationComponent implements OnInit {
     this.authState = this.store.select('auth').pipe(
       tap((authState) => { this.isAuth = authState.isAuth })
     )
-
-    // if (this.isAuth) {
-    //   this.onLogout()
-    // }
   }
 
   onLogin() {

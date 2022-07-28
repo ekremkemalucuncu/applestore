@@ -9,7 +9,6 @@ import { iPhones, Accessoirs, Offers } from 'src/app/shared/firestore.collection
 import * as productActions from '../../../shared/store/products/products.actions'
 import * as fromRoot from '../../../app.reducer'
 import { Store } from '@ngrx/store';
-import { deleteOfferStarted } from '../../../shared/store/products/products.actions';
 @Component({
   selector: 'app-productedit',
   templateUrl: './productedit.component.html',

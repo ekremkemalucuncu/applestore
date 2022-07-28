@@ -8,15 +8,12 @@ import * as fromRoot from '../app.reducer'
 import * as productActions from '../shared/store/products/products.actions'
 import { Offer } from '../shared/models/offers.model';
 
-
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-
-
 
   @Input() from:string;
   product:string;
@@ -66,6 +63,5 @@ export class ProductsComponent implements OnInit {
     else {
       this.managing = false
     }
-
   }
 }
