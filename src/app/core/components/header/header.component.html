@@ -4,9 +4,6 @@
     </button>
     <span style="cursor: pointer;" [routerLink]="['/']"><img class="logo" src="https://im.haberturk.com/2019/10/10/ver1570697536/apple-musteri-hizmetleri-direk-baglanma_2529675_414x414.jpg" alt="iPhoneLogo"></span>
     <span class="example-spacer"></span>
-    <span> <button mat-button [routerLink]="['/product',{product:'iphone'}]">iPhone</button></span>
-    <span> <button mat-button [routerLink]="['/product',{product:'accessoir'}]">Accessoir</button></span>
-    <span> <button mat-button [routerLink]="['/product',{product:'offer'}]">Offers</button></span>
     <span> <button *ngIf="isAuth " mat-button [routerLink]="['/productmanager']" [queryParams]="{product : 'iphone'}" >iPhoneManager</button></span>
     <span> <button *ngIf="isAuth " mat-button [routerLink]="['/productmanager']" [queryParams]="{product : 'accessoir'}" >AccessoirManager</button></span>
     <span> <button *ngIf="isAuth" mat-button [routerLink]="['/productmanager']" [queryParams]="{product : 'offer'}">OfferManager</button></span>

@@ -12,21 +12,21 @@ const redirectUnauthorizedToAuthentication = () => redirectUnauthorizedTo(['auth
 
 const routes: Routes = [
   {
-    path:'authentication',
-    component:AuthenticationComponent
+    path: 'authentication',
+    component: AuthenticationComponent
   },
-  {path:'product',component:ProductComponent},
+  { path: 'product', component: ProductComponent },
   {
-    path:'productmanager',
-    component:ProductmanagerComponent,
-    canActivate:[AngularFireAuthGuard] ,
-    data:{authGuardPipe:redirectUnauthorizedToAuthentication},
-  },
-  {
-    path:'productmanager/add',component:ProducteditComponent
+    path: 'productmanager',
+    component: ProductmanagerComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToAuthentication },
   },
   {
-    path:'productmanager/update',component:ProducteditComponent
+    path: 'productmanager/add', component: ProducteditComponent
+  },
+  {
+    path: 'productmanager/update', component: ProducteditComponent
   },
 
 ];

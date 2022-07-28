@@ -39,6 +39,13 @@ export class AuthenticationEffects {
       }));
   })
 
+  redirectOnAutoLogin$ = createEffect(() => this.actions.pipe(
+    ofType(AUTH.Authenticated),
+    tap(() => {
+      this.router.navigate(['/productmanager'], { queryParams: { product: 'iphone' } })
+    })
+  ), { dispatch: false });
+
   logOut$ = createEffect(() => this.actions.pipe(
     ofType(AUTH.LogOut),
     tap(() => {
