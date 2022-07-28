@@ -87,7 +87,6 @@ export class ProducteditComponent implements OnInit {
       this.store.dispatch(productActions.createIphonesStarted({ data: this.form.value }))
     }
     else if (this.product == Accessoirs) {
-      this.productservice.createProducts(this.product, this.form);
       this.store.dispatch(productActions.createAccessoirStarted({ data: this.form.value }))
     }
     else if (this.product == Offers) {
