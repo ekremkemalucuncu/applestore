@@ -19,7 +19,6 @@
                         <h2 style="padding-left:10px">{{element.price}} $</h2>
                         <h4 style="text-decoration:line-through;padding-left:5px;color:red">{{element['oldprice']}}$</h4>
                     </span>
-                    <!-- <button *ngIf="!managing" class="addCart" mat-stroked-button color="warn">Add to Cart</button> -->
                     <button *ngIf="managing && product != 'Offers'" class="addCart" mat-stroked-button color="warn" [routerLink]="['update',{product:product,id:element.id}]">Edit {{product}}</button>
                 </mat-card-actions>
             </mat-card>
