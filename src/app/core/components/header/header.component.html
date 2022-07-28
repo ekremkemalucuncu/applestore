@@ -11,9 +11,6 @@
     <span> <button *ngIf="isAuth " mat-button [routerLink]="['/productmanager']" [queryParams]="{product : 'accessoir'}" >AccessoirManager</button></span>
     <span> <button *ngIf="isAuth" mat-button [routerLink]="['/productmanager']" [queryParams]="{product : 'offer'}">OfferManager</button></span>
     <span class="example-spacer"></span>
-    <button mat-icon-button >
-        <mat-icon>shopping_cart</mat-icon>
-    </button>
     <button *ngIf="!isAuth" mat-icon-button [routerLink]="['/authentication']">
         <mat-icon>login</mat-icon>
     </button>
