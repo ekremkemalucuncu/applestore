@@ -270,4 +270,28 @@ export class ProductEffects {
       })
     );
   });
+
+  createOffer = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.createOfferStarted),
+      switchMap((action) => {
+        var offer = {
+          iphone: this.db.doc('/iPhones/' + action.iphoneId).ref,
+          accessoir: this.db.doc('/iPhones/' + action.accessoirId).ref,
+          ...action.data,
+        };
+        return from(this.db.collection('Offers').add(offer)).pipe(
+          map(() => {
+            this.router.navigate(['/productmanager'], {
+              queryParams: { product: 'offer' },
+            });
+            return productActions.createAccessoirSuccess();
+          }),
+          catchError(async (error) => {
+            return productActions.createAccessoirFail(error);
+          })
+        );
+      })
+    );
+  });
 }

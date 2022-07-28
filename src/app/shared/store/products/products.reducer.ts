@@ -4,8 +4,6 @@ import { Accessoir } from "../../models/accessoirs.model";
 import { Iphone } from "../../models/iphone.model";
 import { Offer } from "../../models/offers.model";
 import * as productsActions from "./products.actions";
-import { updateIphoneSuccess, updateIphoneFail, updateAccessoirFail } from './products.actions';
-
 
 export interface State {
   iphones: Iphone[],
@@ -54,6 +52,9 @@ const initialState: State = {
   updateAccessoirError : null
 }
 
+
+//TODO: Currently some actions (ex createOfferSuccess, deleteIphoneFail... ) have not been handled in the reducer.
+// They should change some state accordingly.
 
 const _productRecuders = createReducer(
   initialState,
