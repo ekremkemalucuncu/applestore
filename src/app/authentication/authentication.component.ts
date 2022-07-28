@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as fromRoot from '../app.reducer'
 import { Store } from '@ngrx/store';
-import { Observable, tap, Subscription } from 'rxjs';
-import * as FROMAUTH from '../shared/reducers/auth.reducer'
-import * as AUTH from '../shared/reducers/auth.actions';
+import { Observable, tap } from 'rxjs';
+import * as FROMAUTH from '../shared/store/auth/auth.reducer'
+import * as AUTH from '../shared/store/auth/auth.actions';
 
 @Component({
   selector: 'app-authentication',

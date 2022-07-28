@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import * as AUTH from 'src/app/shared/reducers/auth.actions';
+import * as AUTH from 'src/app/shared/store/auth/auth.actions';
 import * as fromRoot from '../../app.reducer';
 @Component({
   selector: 'app-header',
