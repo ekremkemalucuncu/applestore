@@ -35,7 +35,7 @@ export class ProducteditComponent implements OnInit {
     private router: Router,
     private formcreation: FormCreation,
     private store: Store<fromRoot.State>
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.product = this.route.snapshot.params['product'];
@@ -84,34 +84,24 @@ export class ProducteditComponent implements OnInit {
 
   onSubmit() {
     if (this.product == iPhones) {
+      this.store.dispatch(productActions.createIphonesStarted({ data: this.form.value }))
+    }
+    else if (this.product == Accessoirs) {
       this.productservice.createProducts(this.product, this.form);
-      this.router.navigate(['/productmanager'], {
-        queryParams: { product: 'iphone' },
-      });
-    } else if (this.product == Accessoirs) {
+      this.store.dispatch(productActions.createAccessoirStarted({ data: this.form.value }))
+    }
+    else if (this.product == Offers) {
       this.productservice.createProducts(this.product, this.form);
-      this.router.navigate(['/productmanager', { product: 'accessoir' }]);
-    } else if (this.product == Offers) {
-      this.productservice.createProducts(this.product, this.form);
-      this.router.navigate(['/productmanager', { product: 'offer' }]);
     }
   }
 
   onUpdate() {
     if (this.product == iPhones) {
-      this.store.dispatch(
-        productActions.updateIphonesStarted({ id: this.id, form: this.form })
+      this.store.dispatch(productActions.updateIphonesStarted({ id: this.id, payload: { ...this.form.value } })
       );
     } else if (this.product == Accessoirs) {
-      this.store.dispatch(
-        productActions.updateAccessoirStarted({
-          id: this.id,
-          payload: { ...this.form.value },
-        })
+      this.store.dispatch(productActions.updateAccessoirStarted({ id: this.id, payload: { ...this.form.value } })
       );
-    } else if (this.product == Offers) {
-      this.productservice.updateProducts(this.product, this.form, this.id);
-      this.router.navigate(['/productmanager', { product: 'offer' }]);
     }
   }
 

@@ -26,10 +26,24 @@ export const getIPhonesEditSuccess = createAction(
   props<{ payload: FormGroup }>()
 );
 
+export const createIphonesStarted = createAction(
+  "CREATE_IPHONE_STARTED",
+  props<{ data: any }>()
+)
+
+export const createIphoneSuccess = createAction(
+  "CREATE_IPHONE_SUCCESS"
+)
+
+export const createIphoneFail = createAction(
+  "CREATE_IPHONE_SUCCESS",
+  props<{ payload: string }>()
+)
+
 export const updateIphonesStarted = createAction(
-  'UPDATE_IPHONE_STARTED',
-  props<{ id: string; form: FormGroup }>()
-);
+  "UPDATE_IPHONE_STARTED",
+  props<{ id: string, payload: Iphone }>()
+)
 
 export const updateIphoneSuccess = createAction('UPDATE_IPHONE_SUCCESS');
 
@@ -83,6 +97,20 @@ export const updateAccessoirFail = createAction(
   'UPDATE_ACCESSOIR_SUCCESS',
   props<{ payload: string }>()
 );
+
+export const createAccessoirStarted = createAction(
+  "CREATE_ACCESSOIR_STARTED",
+  props<{ data: any }>()
+)
+
+export const createAccessoirSuccess = createAction(
+  "CREATE_ACCESSOIR_SUCCESS"
+)
+
+export const createAccessoirFail = createAction(
+  "CREATE_ACCESSOIR_SUCCESS",
+  props<{ payload: string }>()
+)
 
 export const deleteIphoneStarted = createAction(
   'DELETE_PHONE_STARTED',

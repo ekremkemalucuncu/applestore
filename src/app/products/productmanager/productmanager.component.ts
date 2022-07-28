@@ -1,4 +1,4 @@
-import { Component, OnInit, Output ,EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Accessoir } from 'src/app/shared/models/accessoirs.model';
@@ -31,5 +31,4 @@ export class ProductmanagerComponent implements OnInit {
       this.fetchedProducts = result.iphones
     })
   }
-
 }

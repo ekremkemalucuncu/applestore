@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { ProductComponent } from './products/product/product.component';
@@ -12,7 +12,7 @@ const redirectUnauthorizedToAuthentication = () => redirectUnauthorizedTo(['auth
 
 const routes: Routes = [
   {
-    path:'authentication', 
+    path:'authentication',
     component:AuthenticationComponent
   },
   {path:'product',component:ProductComponent},

@@ -28,15 +28,12 @@ export class AuthenticationEffects {
     return this.actions.pipe(
       ofType(AUTH.SignupStarted),
       switchMap((action: any) => {
-        console.log({action: action});
         return from(this.ngFireAuth.createUserWithEmailAndPassword(action.email, action.password)).pipe(
           switchMap((result) => {
-            console.log({ result: result });
             this.router.navigate(['']);
             return of(AUTH.Authenticated())
           }),
           catchError(async (error) => {
-            console.log({ error: error });
             return AUTH.SignupFails({ error: error.message });
           }))
       }));
@@ -45,10 +42,10 @@ export class AuthenticationEffects {
   logOut$ = createEffect(() => this.actions.pipe(
     ofType(AUTH.LogOut),
     tap(() => {
-        this.ngFireAuth.signOut();
-        this.router.navigate(['authentication'])
+      this.ngFireAuth.signOut();
+      this.router.navigate(['authentication'])
     })
-), { dispatch: false });
+  ), { dispatch: false });
 
   constructor(private actions: Actions,
     private router: Router,
