@@ -9,7 +9,6 @@ import { MaterialModule } from './material.module';
 import { ProductsComponent } from './products/products.component';
 import { ProductmanagerComponent } from './products/productmanager/productmanager.component';
 import { ProductComponent } from './products/product/product.component';
-import { HeaderComponent } from './core/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireModule } from '@angular/fire/compat'
@@ -24,6 +23,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './shared/store/products/products.effects';
 import { AuthenticationEffects } from './shared/store/auth/auth.effects';
 import { SharedModule } from './shared/shared.module';
+import { HeaderComponent } from './core/components/header/header.component';
 
 
 @NgModule({
