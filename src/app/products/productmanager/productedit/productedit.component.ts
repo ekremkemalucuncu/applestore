@@ -13,6 +13,9 @@ import {
 import * as productActions from '../../../shared/store/products/products.actions';
 import * as fromRoot from '../../../app.reducer';
 import { Store } from '@ngrx/store';
+import * as fromProducts from 'src/app/shared/store/products/products.reducer';
+import { Observable } from 'rxjs';
+import * as productsActions from '../../../shared/store/products/products.actions';
 @Component({
   selector: 'app-productedit',
   templateUrl: './productedit.component.html',
@@ -24,10 +27,9 @@ export class ProducteditComponent implements OnInit {
   id: string;
   productUpdate: Iphone | Accessoir;
   formProduct: any;
-  fetchedIphones: any;
-  fetchedAccessoirs: any;
   selectedaccessoir: Accessoir;
   selectediphone: Iphone;
+  productsState: Observable<fromProducts.State>
 
   constructor(
     private productservice: ProductService,
@@ -54,21 +56,14 @@ export class ProducteditComponent implements OnInit {
         this.form
       );
     } else if (this.product == Offers) {
+      this.store.dispatch(productsActions.getIPhonesStarted());
+      this.store.dispatch(productsActions.getAccessoirsStarted());
+      this.productsState = this.store.select('product');
       this.form = this.formcreation.formCreationOffer(
         this.product,
         this.id,
         this.form
       )['form'];
-      this.fetchedIphones = this.formcreation.formCreationOffer(
-        this.product,
-        this.id,
-        this.form
-      )['fetchedIphones'];
-      this.fetchedAccessoirs = this.formcreation.formCreationOffer(
-        this.product,
-        this.id,
-        this.form
-      )['fetchedAccessoirs'];
       this.selectedaccessoir = this.formcreation.formCreationOffer(
         this.product,
         this.id,
@@ -91,6 +86,7 @@ export class ProducteditComponent implements OnInit {
     }
     else if (this.product == Offers) {
       this.productservice.createProducts(this.product, this.form);
+      this.router.navigate(['/productmanager'], { queryParams: { product: 'offers' } })
     }
   }
 

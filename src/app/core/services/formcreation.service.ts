@@ -18,7 +18,7 @@ export class FormCreation{
         private productservice:ProductService,
         private db:AngularFirestore
     ){
-        
+
     }
 
     formCreationIphone(product:string,id:string,form:FormGroup){
@@ -32,7 +32,7 @@ export class FormCreation{
           sku: new FormControl(null,[Validators.required]),
           description: new FormControl(null,[Validators.required]),
         })
-    
+
         if(id){
           let formProduct
           this.db.collection('iPhones').doc(id).valueChanges().subscribe(
@@ -51,8 +51,8 @@ export class FormCreation{
         }
         return form
       }
-    
-    
+
+
       formCreationAccessoir(product:string,id:string,form:FormGroup){
         form = new FormGroup({
           name: new FormControl(null,[Validators.required]),
@@ -60,7 +60,7 @@ export class FormCreation{
           imagesource: new FormControl(null,[Validators.required]),
           description: new FormControl(null,[Validators.required]),
         })
-    
+
         if(id){
           let formProduct;
           this.db.collection('Accessoirs').doc(id).valueChanges().subscribe(
@@ -72,12 +72,12 @@ export class FormCreation{
               form.get('description').setValue(formProduct['description'])
             }
           )
-          
+
         }
         return form
       }
-    
-    
+
+
       formCreationOffer(product:string,id:string,form:FormGroup){
         let selectedaccessoir:Accessoir;
         let selectediphone:Iphone;
@@ -88,7 +88,7 @@ export class FormCreation{
           accessoir: new FormControl(null,[Validators.required]),
           price: new FormControl(null,[Validators.required]),
         })
-    
+
         if(id){
           let formProduct=this.productservice.getProductByID(id,product);
           form.get('name').setValue(formProduct['name'])
@@ -105,7 +105,7 @@ export class FormCreation{
             fetchedIphones=productlist
           }
         )
-        
+
         let fetchedAccessoirs:Accessoir[];
         this.productservice.getProduct(Accessoirs)
         .pipe(take(1))
@@ -120,7 +120,7 @@ export class FormCreation{
           fetchedIphones:fetchedIphones,
           fetchedAccessoirs:fetchedAccessoirs,
           selectedaccessoir:selectedaccessoir,
-          selectediphone:selectediphone        
+          selectediphone:selectediphone
         }
       }
 }
