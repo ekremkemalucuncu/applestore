@@ -9,7 +9,6 @@ import { Iphone } from '../../models/iphone.model';
 import { Accessoir } from "../../models/accessoirs.model";
 import { Offer } from "../../models/offers.model";
 import { Router } from "@angular/router";
-
 @Injectable()
 export class ProductEffects {
   constructor(private db: AngularFirestore,
@@ -115,7 +114,7 @@ export class ProductEffects {
           }
         )).pipe(
           map(() => {
-            this.router.navigate(['/productmanager'], { queryParams: { product: 'iphone' } })
+            this.router.navigate(['/productmanager', { product: 'accessoir' }])
             return productActions.updateIphoneSuccess();
           }),
           catchError(async (error) => {
@@ -156,27 +155,57 @@ export class ProductEffects {
     )
   })
 
+  deleteIphone = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.deleteIphoneStarted),
+      switchMap((action) => {
+        return from(this.db.collection('iPhones').doc(action.id).delete()).pipe(
+          map((result) => {
+            this.router.navigate(['/productmanager', { product: 'iphone' }])
+            return productActions.deleteIphoneSuccess();
+          }),
+          catchError(async (error) => {
+            console.error({ error: error });
+            return productActions.deleteIphoneFail(error);
+          })
+        )
+      }),
+    );
+  });
 
-  // getOffersUpdate =createEffect(() => {
-  //   return this.actions.pipe(
-  //     ofType(productActions.getOffersStarted),
-  //     withLatestFrom(this.store.select('product')),
-  //     switchMap(([action,offerState])=>{
-  //       return this.db.collection('Offers').snapshotChanges().pipe(
-  //         map((documents) =>{
-  //           var Offers = documents.map((document) => ({
-  //             id:document.payload.doc.id,
-  //             ...(document.payload.doc.data() as Offer)
-  //           }))
-  //           return productActions.getOffersSuccess({payload:Offers})
-  //         }),
-  //         catchError(async (error) => {
-  //           return productActions.getOffersFail({ payload: error })
-  //         })
-  //       )
-  //     })
-  //   )
-  // })
+  deleteAccessoir = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.deleteAccessoirStarted),
+      switchMap((action) => {
+        return from(this.db.collection('Accessoirs').doc(action.id).delete()).pipe(
+          map((result) => {
+            this.router.navigate(['/productmanager', { product: 'accessoir' }])
+            return productActions.deleteAccessoirSuccess();
+          }),
+          catchError(async (error) => {
+            console.error({ error: error });
+            return productActions.deleteAccessoirFail(error);
+          })
+        )
+      }),
+    );
+  });
 
-
+  deleteOffer = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.deleteOfferStarted),
+      switchMap((action) => {
+        return from(this.db.collection('Offers').doc(action.id).delete()).pipe(
+          map((result) => {
+            this.router.navigate(['/productmanager', { product: 'offer' }])
+            return productActions.deleteOfferSuccess();
+          }),
+          catchError(async (error) => {
+            console.error({ error: error });
+            return productActions.deleteOfferFail(error);
+          })
+        )
+      }),
+    );
+  });
 }

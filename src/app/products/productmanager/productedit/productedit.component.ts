@@ -9,6 +9,7 @@ import { iPhones, Accessoirs, Offers } from 'src/app/shared/firestore.collection
 import * as productActions from '../../../shared/store/products/products.actions'
 import * as fromRoot from '../../../app.reducer'
 import { Store } from '@ngrx/store';
+import { deleteOfferStarted } from '../../../shared/store/products/products.actions';
 @Component({
   selector: 'app-productedit',
   templateUrl: './productedit.component.html',
@@ -72,15 +73,10 @@ export class ProducteditComponent implements OnInit {
 
   onUpdate() {
     if (this.product == iPhones) {
-      // this.productservice.updateProducts(this.product,this.form,this.id);
-      // this.store.dispatch(productActions.getIPhonesUpdateStarted({ payload: this.form, id: this.id }));
-      this.store.dispatch(productActions.updateIphonesStarted({id : this.id, form: this.form}))
-      // this.router.navigate(['/productmanager', { product: 'iphone' }]);
+      this.store.dispatch(productActions.updateIphonesStarted({ id: this.id, form: this.form }))
     }
     else if (this.product == Accessoirs) {
-      // this.productservice.updateProducts(this.product, this.form, this.id);
-      this.store.dispatch(productActions.updateAccessoirStarted({id : this.id, form: this.form}))
-      this.router.navigate(['/productmanager', { product: 'accessoir' }])
+      this.store.dispatch(productActions.updateAccessoirStarted({ id: this.id, form: this.form }))
     }
     else if (this.product == Offers) {
       this.productservice.updateProducts(this.product, this.form, this.id);
@@ -90,15 +86,14 @@ export class ProducteditComponent implements OnInit {
 
 
   onDelete() {
-    this.productservice.deleteProduct(this.product, this.id)
     if (this.product == iPhones) {
-      this.router.navigate(['/productmanager', { product: 'iphone' }])
+      this.store.dispatch(productActions.deleteIphoneStarted({ id: this.id }));
     }
     else if (this.product == Accessoirs) {
-      this.router.navigate(['/productmanager', { product: 'accessoir' }])
+      this.store.dispatch(productActions.deleteAccessoirStarted({ id: this.id }));
     }
     else if (this.product == Offers) {
-      this.router.navigate(['/productmanager', { product: 'offer' }])
+      this.store.dispatch(productActions.deleteOfferStarted({ id: this.id }));
     }
   }
 }

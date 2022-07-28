@@ -95,3 +95,45 @@ export const updateAccessoirFail = createAction(
   "UPDATE_ACCESSOIR_SUCCESS",
   props<{ payload: string }>()
 )
+
+export const deleteIphoneStarted = createAction(
+  "DELETE_PHONE_STARTED",
+  props<{ id: string }>()
+)
+
+export const deleteIphoneSuccess = createAction(
+  "DELETE_PHONE_FAIL",
+)
+
+export const deleteIphoneFail = createAction(
+  "DELETE_PHONE_SUCCESS",
+  props<{ payload: string }>()
+)
+
+export const deleteAccessoirStarted = createAction(
+  "DELETE_ACCESSOIR_STARTED",
+  props<{ id: string }>()
+)
+
+export const deleteAccessoirSuccess = createAction(
+  "DELETE_ACCESSOIR_SUCCESS",
+)
+
+export const deleteAccessoirFail = createAction(
+  "DELETE_ACCESSOIR_FAIL",
+  props<{ payload: string }>()
+)
+
+export const deleteOfferStarted = createAction(
+  "DELETE_OFFER_STARTED",
+  props<{ id: string }>()
+)
+
+export const deleteOfferSuccess = createAction(
+  "DELETE_OFFER_SUCCESS",
+)
+
+export const deleteOfferFail = createAction(
+  "DELETE_AOFFER_FAIL",
+  props<{ payload: string }>()
+)
