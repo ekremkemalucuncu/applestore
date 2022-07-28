@@ -16,7 +16,7 @@ export class ProductEffects {
     private actions: Actions,
     private store: Store<fromApp.State>,
     private router: Router
-  ) { }
+  ) {}
 
   getIphones = createEffect(() => {
     return this.actions.pipe(
@@ -52,37 +52,36 @@ export class ProductEffects {
     return this.actions.pipe(
       ofType(productActions.createIphonesStarted),
       switchMap((action) => {
-        return from(this.db.collection('iPhones').add(
-          {
-            name: action.data.name,
-            price: action.data.price,
-            imagesource: action.data.imagesource,
-            color: action.data.color,
-            screensize: action.data.screensize,
-            description: action.data.description,
-            sku: action.data.sku,
-            model: action.data.model
-          }
-        )).pipe(
+        return from(
+          this.db.collection('iPhones').add({
+            ...action.data.model,
+          })
+        ).pipe(
           map(() => {
-            this.router.navigate(['/productmanager'], { queryParams: { product: 'iphone' } })
+            this.router.navigate(['/productmanager'], {
+              queryParams: { product: 'iphone' },
+            });
             return productActions.createIphoneSuccess();
           }),
           catchError(async (error) => {
             return productActions.createIphoneFail(error);
           })
-        )
+        );
       })
-    )
-  })
+    );
+  });
 
   updateIphone = createEffect(() => {
     return this.actions.pipe(
       ofType(productActions.updateIphonesStarted),
       switchMap((action) => {
-        return from(this.db.collection('iPhones').doc(action.id).update(action.payload)).pipe(
+        return from(
+          this.db.collection('iPhones').doc(action.id).update(action.payload)
+        ).pipe(
           map(() => {
-            this.router.navigate(['/productmanager'], { queryParams: { product: 'iphone' },});
+            this.router.navigate(['/productmanager'], {
+              queryParams: { product: 'iphone' },
+            });
             return productActions.updateIphoneSuccess();
           }),
           catchError(async (error) => {
@@ -131,25 +130,24 @@ export class ProductEffects {
     return this.actions.pipe(
       ofType(productActions.createAccessoirStarted),
       switchMap((action) => {
-        return from(this.db.collection('iPhones').add(
-          {
-            name: action.data.name ?? "",
-            price: action.data.price ?? "",
-            imagesource: action.data.imagesource ?? "",
-            description: action.data.description ?? "",
-          }
-        )).pipe(
+        return from(
+          this.db.collection('Accessoirs').add({
+            ...action.data,
+          })
+        ).pipe(
           map(() => {
-            this.router.navigate(['/productmanager'], { queryParams: { product: 'accessoir' } })
+            this.router.navigate(['/productmanager'], {
+              queryParams: { product: 'accessoir' },
+            });
             return productActions.createAccessoirSuccess();
           }),
           catchError(async (error) => {
             return productActions.createAccessoirFail(error);
           })
-        )
+        );
       })
-    )
-  })
+    );
+  });
 
   updateAccessoir = createEffect(() => {
     return this.actions.pipe(
@@ -159,7 +157,9 @@ export class ProductEffects {
           this.db.collection('Accessoirs').doc(action.id).update(action.payload)
         ).pipe(
           map(() => {
-            this.router.navigate(['/productmanager'], { queryParams: { product: 'accessoir' } })
+            this.router.navigate(['/productmanager'], {
+              queryParams: { product: 'accessoir' },
+            });
             return productActions.updateAccessoirSuccess();
           }),
           catchError(async (error) => {
@@ -214,7 +214,9 @@ export class ProductEffects {
       switchMap((action) => {
         return from(this.db.collection('iPhones').doc(action.id).delete()).pipe(
           map((result) => {
-            this.router.navigate(['/productmanager'], { queryParams: { product: 'iphone' } })
+            this.router.navigate(['/productmanager'], {
+              queryParams: { product: 'iphone' },
+            });
             return productActions.deleteIphoneSuccess();
           }),
           catchError(async (error) => {
@@ -234,7 +236,9 @@ export class ProductEffects {
           this.db.collection('Accessoirs').doc(action.id).delete()
         ).pipe(
           map((result) => {
-            this.router.navigate(['/productmanager'], { queryParams: { product: 'accessoir' } })
+            this.router.navigate(['/productmanager'], {
+              queryParams: { product: 'accessoir' },
+            });
             return productActions.deleteAccessoirSuccess();
           }),
           catchError(async (error) => {
@@ -252,7 +256,9 @@ export class ProductEffects {
       switchMap((action) => {
         return from(this.db.collection('Offers').doc(action.id).delete()).pipe(
           map((result) => {
-            this.router.navigate(['/productmanager'], { queryParams: { product: 'offer' } })
+            this.router.navigate(['/productmanager'], {
+              queryParams: { product: 'offer' },
+            });
 
             return productActions.deleteOfferSuccess();
           }),
@@ -264,5 +270,4 @@ export class ProductEffects {
       })
     );
   });
-
 }
