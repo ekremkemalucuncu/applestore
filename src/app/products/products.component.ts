@@ -23,7 +23,6 @@ export class ProductsComponent implements OnInit {
 
 
   constructor(
-    private productservice:ProductService,
     private store:Store<fromRoot.State>
   ) { }
 

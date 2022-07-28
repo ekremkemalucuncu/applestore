@@ -27,8 +27,20 @@ export class ProductmanagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.from=this.route.snapshot.queryParams['product']+'manager';
-    this.store.select('product').subscribe((result)=>{
-      this.fetchedProducts = result.iphones
-    })
+    if(this.route.snapshot.queryParams['product']=='iphone'){
+      this.store.select('product').subscribe((result)=>{
+        this.fetchedProducts = result.iphones
+      })
+    }
+    else if(this.route.snapshot.queryParams['product']=='accessoir'){
+      this.store.select('product').subscribe((result)=>{
+        this.fetchedProducts = result.accessoirs
+      })
+    }
+    else if(this.route.snapshot.queryParams['product']=='offer'){
+      this.store.select('product').subscribe((result)=>{
+        this.fetchedProducts = result.offers
+      })
+    }
   }
 }
