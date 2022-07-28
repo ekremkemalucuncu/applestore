@@ -20,6 +20,7 @@
                         <h4 style="text-decoration:line-through;padding-left:5px;color:red">{{element['oldprice']}}$</h4>
                     </span>
                     <button *ngIf="managing && product != 'Offers'" class="addCart" mat-stroked-button color="warn" [routerLink]="['update',{product:product,id:element.id}]">Edit {{product}}</button>
+                    <button (click)="remove( element.id, product)" *ngIf="managing && product == 'Offers'" class="addCart" mat-stroked-button color="warn">Remove {{product}}</button>
                 </mat-card-actions>
             </mat-card>
         </mat-grid-tile>
