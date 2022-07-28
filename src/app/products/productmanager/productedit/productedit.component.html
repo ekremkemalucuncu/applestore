@@ -26,13 +26,13 @@
           <mat-grid-tile [rowspan]="2" *ngIf="product === 'Offers'">
             <mat-form-field appearance="outline">
               <mat-label>iPhone</mat-label>
-              <mat-select *ngIf="id" [(ngModel)]="selectediphone['id']" formControlName="iphone" matInput required>
+              <!-- <mat-select *ngIf="id" [(ngModel)]="selectediphone['id']" formControlName="iphone" matInput required>
                 <mat-option *ngFor="let iphone of productsState.iphones" [value]="iphone.id">
                   {{ iphone.name }}
                 </mat-option>
-              </mat-select>
-              <mat-select *ngIf="!id" formControlName="iphone" matInput required>
-                <mat-option *ngFor="let iphone of productsState.iphones" [value]="iphone.id">
+              </mat-select> -->
+              <mat-select *ngIf="!id"  [(ngModel)]="selectediphone" formControlName="iphone" matInput required>
+                <mat-option *ngFor="let iphone of productsState.iphones" [value]="iphone">
                   {{ iphone.name }}
                 </mat-option>
               </mat-select>
@@ -41,13 +41,13 @@
           <mat-grid-tile [rowspan]="2" *ngIf="product === 'Offers'">
             <mat-form-field appearance="outline">
               <mat-label>Accessoir</mat-label>
-              <mat-select *ngIf="id" [(ngModel)]="selectedaccessoir['id']" formControlName="accessoir" matInput required>
-                <mat-option *ngFor="let accessoir of productsState.accessoirs" [value]="accessoir.id">
+              <mat-select *ngIf="id" [(ngModel)]="selectedaccessoir" formControlName="accessoir" matInput required>
+                <!-- <mat-option *ngFor="let accessoir of productsState.accessoirs" [value]="accessoir.id">
                   {{ accessoir.name }}
-                </mat-option>
+                </mat-option> -->
               </mat-select>
-              <mat-select *ngIf="!id" formControlName="accessoir" matInput required>
-                <mat-option *ngFor="let accessoir of productsState.accessoirs" [value]="accessoir.id">
+              <mat-select *ngIf="!id"  [(ngModel)]="selectedaccessoir" formControlName="accessoir" matInput required>
+                <mat-option *ngFor="let accessoir of productsState.accessoirs" [value]="accessoir">
                   {{ accessoir.name }}
                 </mat-option>
               </mat-select>
@@ -55,7 +55,7 @@
           </mat-grid-tile>
         </ng-container>
         <mat-grid-tile [rowspan]="2">
-          <mat-form-field appearance="outline">
+          <mat-form-field *ngIf="product != 'Offers'" appearance="outline">
             <mat-label>Price</mat-label>
             <input formControlName="price" matInput required type="number" />
             <mat-icon matSuffix>attach_money</mat-icon>

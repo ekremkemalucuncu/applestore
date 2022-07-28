@@ -147,3 +147,17 @@ export const deleteOfferFail = createAction(
   'DELETE_AOFFER_FAIL',
   props<{ payload: string }>()
 );
+
+export const createOfferStarted = createAction(
+  "CREATE_OFFER_STARTED",
+  props<{ iphoneId: string, accessoirId: string, data: any }>()
+)
+
+export const createOfferSuccess = createAction(
+  "CREATE_OFFER_SUCCESS"
+)
+
+export const createOfferFail = createAction(
+  "CREATE_OFFER_SUCCESS",
+  props<{ payload: string }>()
+)

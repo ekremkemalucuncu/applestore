@@ -82,7 +82,7 @@ export class ProductEffects {
       switchMap((action) => {
         return from(this.db.collection('iPhones').doc(action.id).update(action.payload)).pipe(
           map(() => {
-            this.router.navigate(['/productmanager'], { queryParams: { product: 'iphone' },});
+            this.router.navigate(['/productmanager'], { queryParams: { product: 'iphone' }, });
             return productActions.updateIphoneSuccess();
           }),
           catchError(async (error) => {
@@ -131,7 +131,7 @@ export class ProductEffects {
     return this.actions.pipe(
       ofType(productActions.createAccessoirStarted),
       switchMap((action) => {
-        return from(this.db.collection('iPhones').add(
+        return from(this.db.collection('Accessoirs').add(
           {
             name: action.data.name ?? "",
             price: action.data.price ?? "",
@@ -264,5 +264,27 @@ export class ProductEffects {
       })
     );
   });
+
+  createOffer = createEffect(() => {
+    return this.actions.pipe(
+      ofType(productActions.createOfferStarted),
+      switchMap((action) => {
+        var offer = {
+          iphone: this.db.doc('/iPhones/' + action.iphoneId).ref,
+          accessoir: this.db.doc('/iPhones/' + action.accessoirId).ref,
+          ...action.data
+        }
+        return from(this.db.collection('Offers').add(offer)).pipe(
+          map(() => {
+            this.router.navigate(['/productmanager'], { queryParams: { product: 'offer' } })
+            return productActions.createAccessoirSuccess();
+          }),
+          catchError(async (error) => {
+            return productActions.createAccessoirFail(error);
+          })
+        )
+      })
+    )
+  })
 
 }

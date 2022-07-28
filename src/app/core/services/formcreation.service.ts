@@ -97,28 +97,8 @@ export class FormCreation{
           selectediphone = formProduct['iphone']
         }
 
-        let fetchedIphones:Iphone[];
-        this.productservice.getProduct(iPhones)
-        .pipe(take(1))
-        .subscribe(
-          productlist=>{
-            fetchedIphones=productlist
-          }
-        )
-
-        let fetchedAccessoirs:Accessoir[];
-        this.productservice.getProduct(Accessoirs)
-        .pipe(take(1))
-        .subscribe(
-          productlist=>{
-            fetchedAccessoirs=productlist
-          }
-        )
-
         return {
           form:form,
-          fetchedIphones:fetchedIphones,
-          fetchedAccessoirs:fetchedAccessoirs,
           selectedaccessoir:selectedaccessoir,
           selectediphone:selectediphone
         }

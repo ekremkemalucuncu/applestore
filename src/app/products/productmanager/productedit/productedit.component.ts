@@ -16,6 +16,8 @@ import { Store } from '@ngrx/store';
 import * as fromProducts from 'src/app/shared/store/products/products.reducer';
 import { Observable } from 'rxjs';
 import * as productsActions from '../../../shared/store/products/products.actions';
+import { Offer } from 'src/app/shared/models/offers.model';
+import { sliceNumber } from '../../../shared/number.slice';
 @Component({
   selector: 'app-productedit',
   templateUrl: './productedit.component.html',
@@ -85,8 +87,13 @@ export class ProducteditComponent implements OnInit {
       this.store.dispatch(productActions.createAccessoirStarted({ data: this.form.value }))
     }
     else if (this.product == Offers) {
-      this.productservice.createProducts(this.product, this.form);
-      this.router.navigate(['/productmanager'], { queryParams: { product: 'offers' } })
+      var offerInfo = {
+        name: this.form.controls['name'].value,
+        price: this.selectediphone.price + this.selectedaccessoir.price,
+        oldprice: this.selectediphone.price + this.selectedaccessoir.price,
+        rate: sliceNumber((this.selectediphone.price + this.selectedaccessoir.price) - (this.selectediphone.price + this.selectedaccessoir.price * 20 / 100), 5)
+      }
+      this.store.dispatch(productActions.createOfferStarted({ iphoneId: this.selectediphone.id, accessoirId: this.selectedaccessoir.id, data: offerInfo }))
     }
   }
 
