@@ -26,7 +26,7 @@ export class ProductmanagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.from=this.route.snapshot.params['product']+'manager';
+    this.from=this.route.snapshot.queryParams['product']+'manager';
     this.store.select('product').subscribe((result)=>{
       this.fetchedProducts = result.iphones
     })
